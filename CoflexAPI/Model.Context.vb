@@ -26,9 +26,9 @@ Partial Public Class Entities
     Public Overridable Property AspNetUserClaims() As DbSet(Of AspNetUserClaims)
     Public Overridable Property AspNetUserLogins() As DbSet(Of AspNetUserLogins)
     Public Overridable Property AspNetUsers() As DbSet(Of AspNetUsers)
-    Public Overridable Property QuotationSet() As DbSet(Of Quotation)
-    Public Overridable Property QuotationVersionSet() As DbSet(Of QuotationVersion)
-    Public Overridable Property ItemsSet() As DbSet(Of Items)
-    Public Overridable Property ItemsComponentsSet() As DbSet(Of ItemsComponents)
+    Public Overridable Property Items() As DbSet(Of Items)
+    Public Overridable Property ItemsComponents() As DbSet(Of ItemsComponents)
+    Public Overridable Property Quotations() As DbSet(Of Quotations)
+    Public Overridable Property QuotationVersions() As DbSet(Of QuotationVersions)
 
 End Class

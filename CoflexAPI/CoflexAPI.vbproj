@@ -277,27 +277,11 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.vb" />
-    <Compile Include="Controllers\ComponentsController.vb" />
-    <Compile Include="Controllers\ItemComponentsController.vb" />
-    <Compile Include="Controllers\ItemsController.vb" />
+    <Compile Include="Controllers\QuotationItemsComponentsController.vb" />
+    <Compile Include="Controllers\QuotationItemsController.vb" />
     <Compile Include="Controllers\QuotationsController.vb" />
     <Compile Include="Controllers\QuotationVersionsController.vb" />
     <Compile Include="Controllers\RolesController.vb" />
-    <Compile Include="ExternalModel.Context.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ExternalModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ExternalModel.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ExternalModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="ExternalModel.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ExternalModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -356,23 +340,14 @@
     </Compile>
     <Compile Include="Controllers\HomeController.vb" />
     <Compile Include="Providers\ApplicationOAuthProvider.vb" />
-    <Compile Include="Quotation.vb">
+    <Compile Include="Quotations.vb">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="QuotationVersion.vb">
+    <Compile Include="QuotationVersions.vb">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Results\ChallengeResult.vb" />
     <Compile Include="Startup.vb" />
-    <Compile Include="VistaComponents.vb">
-      <DependentUpon>ExternalModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="VistaItemComponents.vb">
-      <DependentUpon>ExternalModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="VistaItems.vb">
-      <DependentUpon>ExternalModel.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201704021646455_AddEnableUserField.resx">
@@ -395,16 +370,6 @@
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="ExternalModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ExternalModel.edmx</DependentUpon>
-      <LastGenOutput>ExternalModel.Context.vb</LastGenOutput>
-    </Content>
-    <Content Include="ExternalModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ExternalModel.edmx</DependentUpon>
-      <LastGenOutput>ExternalModel.vb</LastGenOutput>
-    </Content>
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -430,13 +395,6 @@
     <Content Include="Areas\HelpPage\Views\Help\Api.vbhtml" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <EntityDeploy Include="ExternalModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ExternalModel.Designer.vb</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="ExternalModel.edmx.diagram">
-      <DependentUpon>ExternalModel.edmx</DependentUpon>
     </Content>
     <EntityDeploy Include="Model.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -540,7 +498,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>59204</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

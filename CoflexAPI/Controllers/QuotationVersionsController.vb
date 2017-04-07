@@ -16,38 +16,38 @@ Namespace Controllers
         Private db As New ApplicationDbContext
 
         ' GET: api/QuotationVersions
-        Function GetQuotationVersions() As IQueryable(Of QuotationVersion)
+        Function GetQuotationVersions() As IQueryable(Of QuotationVersions)
             Return db.QuotationVersions
         End Function
 
         ' GET: api/QuotationVersions/5
-        <ResponseType(GetType(QuotationVersion))>
-        Async Function GetQuotationVersion(ByVal id As Integer) As Task(Of IHttpActionResult)
-            Dim quotationVersion As QuotationVersion = Await db.QuotationVersions.FindAsync(id)
-            If IsNothing(quotationVersion) Then
+        <ResponseType(GetType(QuotationVersions))>
+        Async Function GetQuotationVersions(ByVal id As Integer) As Task(Of IHttpActionResult)
+            Dim quotationVersions As QuotationVersions = Await db.QuotationVersions.FindAsync(id)
+            If IsNothing(quotationVersions) Then
                 Return NotFound()
             End If
 
-            Return Ok(quotationVersion)
+            Return Ok(quotationVersions)
         End Function
 
         ' PUT: api/QuotationVersions/5
         <ResponseType(GetType(Void))>
-        Async Function PutQuotationVersion(ByVal id As Integer, ByVal quotationVersion As QuotationVersion) As Task(Of IHttpActionResult)
+        Async Function PutQuotationVersions(ByVal id As Integer, ByVal quotationVersions As QuotationVersions) As Task(Of IHttpActionResult)
             If Not ModelState.IsValid Then
                 Return BadRequest(ModelState)
             End If
 
-            If Not id = quotationVersion.Id Then
+            If Not id = quotationVersions.Id Then
                 Return BadRequest()
             End If
 
-            db.Entry(quotationVersion).State = EntityState.Modified
+            db.Entry(quotationVersions).State = EntityState.Modified
 
             Try
                 Await db.SaveChangesAsync()
             Catch ex As DbUpdateConcurrencyException
-                If Not (QuotationVersionExists(id)) Then
+                If Not (QuotationVersionsExists(id)) Then
                     Return NotFound()
                 Else
                     Throw
@@ -58,30 +58,30 @@ Namespace Controllers
         End Function
 
         ' POST: api/QuotationVersions
-        <ResponseType(GetType(QuotationVersion))>
-        Async Function PostQuotationVersion(ByVal quotationVersion As QuotationVersion) As Task(Of IHttpActionResult)
+        <ResponseType(GetType(QuotationVersions))>
+        Async Function PostQuotationVersions(ByVal quotationVersions As QuotationVersions) As Task(Of IHttpActionResult)
             If Not ModelState.IsValid Then
                 Return BadRequest(ModelState)
             End If
 
-            db.QuotationVersions.Add(quotationVersion)
+            db.QuotationVersions.Add(quotationVersions)
             Await db.SaveChangesAsync()
 
-            Return CreatedAtRoute("DefaultApi", New With {.id = quotationVersion.Id}, quotationVersion)
+            Return CreatedAtRoute("DefaultApi", New With {.id = quotationVersions.Id}, quotationVersions)
         End Function
 
         ' DELETE: api/QuotationVersions/5
-        <ResponseType(GetType(QuotationVersion))>
-        Async Function DeleteQuotationVersion(ByVal id As Integer) As Task(Of IHttpActionResult)
-            Dim quotationVersion As QuotationVersion = Await db.QuotationVersions.FindAsync(id)
-            If IsNothing(quotationVersion) Then
+        <ResponseType(GetType(QuotationVersions))>
+        Async Function DeleteQuotationVersions(ByVal id As Integer) As Task(Of IHttpActionResult)
+            Dim quotationVersions As QuotationVersions = Await db.QuotationVersions.FindAsync(id)
+            If IsNothing(quotationVersions) Then
                 Return NotFound()
             End If
 
-            db.QuotationVersions.Remove(quotationVersion)
+            db.QuotationVersions.Remove(quotationVersions)
             Await db.SaveChangesAsync()
 
-            Return Ok(quotationVersion)
+            Return Ok(quotationVersions)
         End Function
 
         Protected Overrides Sub Dispose(ByVal disposing As Boolean)
@@ -91,7 +91,7 @@ Namespace Controllers
             MyBase.Dispose(disposing)
         End Sub
 
-        Private Function QuotationVersionExists(ByVal id As Integer) As Boolean
+        Private Function QuotationVersionsExists(ByVal id As Integer) As Boolean
             Return db.QuotationVersions.Count(Function(e) e.Id = id) > 0
         End Function
     End Class

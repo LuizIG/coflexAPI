@@ -27,12 +27,13 @@ Public Class ApplicationDbContext
     Public Sub New()
         MyBase.New("DefaultConnection", throwIfV1Schema:=False)
     End Sub
-
-    Public Overridable Property QuotationSet() As DbSet(Of Quotation)
+    Public Overridable Property ItemsSet() As DbSet(Of Items)
+    Public Overridable Property ItemsComponentsSet() As DbSet(Of ItemsComponents)
 
     Public Shared Function Create() As ApplicationDbContext
         Return New ApplicationDbContext()
     End Function
 
-    Public Property QuotationVersions As System.Data.Entity.DbSet(Of QuotationVersion)
+    Public Property Quotations As System.Data.Entity.DbSet(Of Quotations)
+    Public Property QuotationVersions As System.Data.Entity.DbSet(Of QuotationVersions)
 End Class

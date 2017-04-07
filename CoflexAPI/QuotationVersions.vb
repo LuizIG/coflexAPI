@@ -10,7 +10,15 @@
 Imports System
 Imports System.Collections.Generic
 
-Partial Public Class VistaItems
-    Public Property PPN_I As String
+Partial Public Class QuotationVersions
+    Public Property Id As Integer
+    Public Property QuotationId As Integer
+    Public Property VersionNumber As String
+    Public Property ExchangeRate As Double
+    Public Property [Date] As Date
+    Public Property Status As Integer
+    Public Property UseStndCost As Boolean
+
+    Public Overridable Property Items As ICollection(Of Items) = New HashSet(Of Items)
 
 End Class

@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="GP_desarrolloModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'GP_desarrollo.dbo.VistaComponents' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="VistaComponents">
+          <Property Name="PPN_I" Type="varchar" MaxLength="31" />
+        </EntityType>-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'GP_desarrollo.dbo.VistaItemComponents' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+
+      <EntityType Name="VistaComponents">
+        <Property Name="PPN_I" Type="varchar" MaxLength="31" />
+      </EntityType>
+
+      <EntityType Name="VistaItemComponents">
+          <Key>
+            <PropertyRef Name="STNDCOST" />
+            <PropertyRef Name="CURRCOST" />
+          </Key>
+          <Property Name="SkuArticulo" Type="varchar" MaxLength="31" />
+          <Property Name="SkuComponente" Type="varchar" MaxLength="31" />
+          <Property Name="ITEMDESC" Type="varchar" MaxLength="101" />
+          <Property Name="QUANTITY_I" Type="numeric" Precision="19" Scale="5" />
+          <Property Name="UOFM" Type="varchar" MaxLength="9" />
+          <Property Name="STNDCOST" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="CURRCOST" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="RESULT" Type="numeric" Precision="38" Scale="9" />
+          <Property Name="Nivel1" Type="smallint" />
+          <Property Name="Nivel2" Type="int" />
+          <Property Name="Nivel3" Type="int" />
+          <Property Name="Parent" Type="varchar" MaxLength="31" />
+        </EntityType>
+      <EntityType Name="VistaItems">
+        <Property Name="PPN_I" Type="varchar" MaxLength="31" />
+      </EntityType>
+
+      <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'GP_desarrollo.dbo.VistaItems' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+-->
+        <EntityContainer Name="GP_desarrolloModelStoreContainer">
+          <EntitySet Name="VistaItemComponents" EntityType="Self.VistaItemComponents" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VistaItemComponents].[SkuArticulo] AS [SkuArticulo], 
+    [VistaItemComponents].[SkuComponente] AS [SkuComponente], 
+    [VistaItemComponents].[ITEMDESC] AS [ITEMDESC], 
+    [VistaItemComponents].[QUANTITY_I] AS [QUANTITY_I], 
+    [VistaItemComponents].[UOFM] AS [UOFM], 
+    [VistaItemComponents].[STNDCOST] AS [STNDCOST], 
+    [VistaItemComponents].[CURRCOST] AS [CURRCOST], 
+    [VistaItemComponents].[RESULT] AS [RESULT], 
+    [VistaItemComponents].[Nivel1] AS [Nivel1], 
+    [VistaItemComponents].[Nivel2] AS [Nivel2], 
+    [VistaItemComponents].[Nivel3] AS [Nivel3], 
+    [VistaItemComponents].[Parent] AS [Parent]
+    FROM [dbo].[VistaItemComponents] AS [VistaItemComponents]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GP_desarrolloModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="VistaItemComponents">
+          <Key>
+            <PropertyRef Name="STNDCOST" />
+            <PropertyRef Name="CURRCOST" />
+          </Key>
+          <Property Name="SkuArticulo" Type="String" MaxLength="31" FixedLength="false" Unicode="false" />
+          <Property Name="SkuComponente" Type="String" MaxLength="31" FixedLength="false" Unicode="false" />
+          <Property Name="ITEMDESC" Type="String" MaxLength="101" FixedLength="false" Unicode="false" />
+          <Property Name="QUANTITY_I" Type="Decimal" Precision="19" Scale="5" />
+          <Property Name="UOFM" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="STNDCOST" Type="Decimal" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="CURRCOST" Type="Decimal" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="RESULT" Type="Decimal" Precision="38" Scale="9" />
+          <Property Name="Nivel1" Type="Int16" />
+          <Property Name="Nivel2" Type="Int32" />
+          <Property Name="Nivel3" Type="Int32" />
+          <Property Name="Parent" Type="String" MaxLength="31" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="GP_desarrolloEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="VistaItemComponents" EntityType="Self.VistaItemComponents" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GP_desarrolloModelStoreContainer" CdmEntityContainer="GP_desarrolloEntities1">
+          <EntitySetMapping Name="VistaItemComponents">
+            <EntityTypeMapping TypeName="GP_desarrolloModel.VistaItemComponents">
+              <MappingFragment StoreEntitySet="VistaItemComponents">
+                <ScalarProperty Name="SkuArticulo" ColumnName="SkuArticulo" />
+                <ScalarProperty Name="SkuComponente" ColumnName="SkuComponente" />
+                <ScalarProperty Name="ITEMDESC" ColumnName="ITEMDESC" />
+                <ScalarProperty Name="QUANTITY_I" ColumnName="QUANTITY_I" />
+                <ScalarProperty Name="UOFM" ColumnName="UOFM" />
+                <ScalarProperty Name="STNDCOST" ColumnName="STNDCOST" />
+                <ScalarProperty Name="CURRCOST" ColumnName="CURRCOST" />
+                <ScalarProperty Name="RESULT" ColumnName="RESULT" />
+                <ScalarProperty Name="Nivel1" ColumnName="Nivel1" />
+                <ScalarProperty Name="Nivel2" ColumnName="Nivel2" />
+                <ScalarProperty Name="Nivel3" ColumnName="Nivel3" />
+                <ScalarProperty Name="Parent" ColumnName="Parent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

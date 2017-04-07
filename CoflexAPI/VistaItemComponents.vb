@@ -22,5 +22,6 @@ Partial Public Class VistaItemComponents
     Public Property Nivel1 As Nullable(Of Short)
     Public Property Nivel2 As Nullable(Of Integer)
     Public Property Nivel3 As Nullable(Of Integer)
+    Public Property Parent As String
 
 End Class

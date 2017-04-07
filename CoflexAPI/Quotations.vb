@@ -10,7 +10,13 @@
 Imports System
 Imports System.Collections.Generic
 
-Partial Public Class VistaComponents
-    Public Property PPN_I As String
+Partial Public Class Quotations
+    Public Property Id As Integer
+    Public Property AspNetUsersId As String
+    Public Property ClientId As String
+    Public Property [Date] As Date
+    Public Property Status As Integer
+
+    Public Overridable Property QuotationVersions As ICollection(Of QuotationVersions) = New HashSet(Of QuotationVersions)
 
 End Class

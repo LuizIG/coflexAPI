@@ -16,38 +16,38 @@ Namespace Controllers
         Private db As New ApplicationDbContext
 
         ' GET: api/Quotations
-        Function GetQuotationSet() As IQueryable(Of Quotation)
-            Return db.QuotationSet
+        Function GetQuotations() As IQueryable(Of Quotations)
+            Return db.Quotations
         End Function
 
         ' GET: api/Quotations/5
-        <ResponseType(GetType(Quotation))>
-        Async Function GetQuotation(ByVal id As Integer) As Task(Of IHttpActionResult)
-            Dim quotation As Quotation = Await db.QuotationSet.FindAsync(id)
-            If IsNothing(quotation) Then
+        <ResponseType(GetType(Quotations))>
+        Async Function GetQuotations(ByVal id As Integer) As Task(Of IHttpActionResult)
+            Dim quotations As Quotations = Await db.Quotations.FindAsync(id)
+            If IsNothing(quotations) Then
                 Return NotFound()
             End If
 
-            Return Ok(quotation)
+            Return Ok(quotations)
         End Function
 
         ' PUT: api/Quotations/5
         <ResponseType(GetType(Void))>
-        Async Function PutQuotation(ByVal id As Integer, ByVal quotation As Quotation) As Task(Of IHttpActionResult)
+        Async Function PutQuotations(ByVal id As Integer, ByVal quotations As Quotations) As Task(Of IHttpActionResult)
             If Not ModelState.IsValid Then
                 Return BadRequest(ModelState)
             End If
 
-            If Not id = quotation.Id Then
+            If Not id = quotations.Id Then
                 Return BadRequest()
             End If
 
-            db.Entry(quotation).State = EntityState.Modified
+            db.Entry(quotations).State = EntityState.Modified
 
             Try
                 Await db.SaveChangesAsync()
             Catch ex As DbUpdateConcurrencyException
-                If Not (QuotationExists(id)) Then
+                If Not (QuotationsExists(id)) Then
                     Return NotFound()
                 Else
                     Throw
@@ -58,30 +58,30 @@ Namespace Controllers
         End Function
 
         ' POST: api/Quotations
-        <ResponseType(GetType(Quotation))>
-        Async Function PostQuotation(ByVal quotation As Quotation) As Task(Of IHttpActionResult)
+        <ResponseType(GetType(Quotations))>
+        Async Function PostQuotations(ByVal quotations As Quotations) As Task(Of IHttpActionResult)
             If Not ModelState.IsValid Then
                 Return BadRequest(ModelState)
             End If
 
-            db.QuotationSet.Add(quotation)
+            db.Quotations.Add(quotations)
             Await db.SaveChangesAsync()
 
-            Return CreatedAtRoute("DefaultApi", New With {.id = quotation.Id}, quotation)
+            Return CreatedAtRoute("DefaultApi", New With {.id = quotations.Id}, quotations)
         End Function
 
         ' DELETE: api/Quotations/5
-        <ResponseType(GetType(Quotation))>
-        Async Function DeleteQuotation(ByVal id As Integer) As Task(Of IHttpActionResult)
-            Dim quotation As Quotation = Await db.QuotationSet.FindAsync(id)
-            If IsNothing(quotation) Then
+        <ResponseType(GetType(Quotations))>
+        Async Function DeleteQuotations(ByVal id As Integer) As Task(Of IHttpActionResult)
+            Dim quotations As Quotations = Await db.Quotations.FindAsync(id)
+            If IsNothing(quotations) Then
                 Return NotFound()
             End If
 
-            db.QuotationSet.Remove(quotation)
+            db.Quotations.Remove(quotations)
             Await db.SaveChangesAsync()
 
-            Return Ok(quotation)
+            Return Ok(quotations)
         End Function
 
         Protected Overrides Sub Dispose(ByVal disposing As Boolean)
@@ -91,8 +91,8 @@ Namespace Controllers
             MyBase.Dispose(disposing)
         End Sub
 
-        Private Function QuotationExists(ByVal id As Integer) As Boolean
-            Return db.QuotationSet.Count(Function(e) e.Id = id) > 0
+        Private Function QuotationsExists(ByVal id As Integer) As Boolean
+            Return db.Quotations.Count(Function(e) e.Id = id) > 0
         End Function
     End Class
 End Namespace

@@ -11,19 +11,17 @@ Imports System
 Imports System.Data.Entity
 Imports System.Data.Entity.Infrastructure
 
-Partial Public Class GP_desarrolloEntities
+Partial Public Class GP_desarrolloEntities1
     Inherits DbContext
 
     Public Sub New()
-        MyBase.New("name=GP_desarrolloEntities")
+        MyBase.New("name=GP_desarrolloEntities1")
     End Sub
 
     Protected Overrides Sub OnModelCreating(modelBuilder As DbModelBuilder)
         Throw New UnintentionalCodeFirstException()
     End Sub
 
-    Public Overridable Property VistaComponents() As DbSet(Of VistaComponents)
-    Public Overridable Property VistaItems() As DbSet(Of VistaItems)
     Public Overridable Property VistaItemComponents() As DbSet(Of VistaItemComponents)
 
 End Class
