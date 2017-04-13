@@ -276,12 +276,39 @@
     <Compile Include="AspNetUsers.vb">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="ComponentsView.vb">
+      <DependentUpon>ExternalModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AccountController.vb" />
+    <Compile Include="Controllers\ComponentsController.vb" />
+    <Compile Include="Controllers\DetailComponetsController.vb" />
+    <Compile Include="Controllers\HomeController.vb" />
+    <Compile Include="Controllers\ItemComponents2Controller.vb" />
+    <Compile Include="Controllers\ItemComponentsController.vb" />
+    <Compile Include="Controllers\ItemsController.vb" />
     <Compile Include="Controllers\QuotationItemsComponentsController.vb" />
     <Compile Include="Controllers\QuotationItemsController.vb" />
     <Compile Include="Controllers\QuotationsController.vb" />
     <Compile Include="Controllers\QuotationVersionsController.vb" />
     <Compile Include="Controllers\RolesController.vb" />
+    <Compile Include="DetailComponetsView.vb">
+      <DependentUpon>ExternalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ExternalModel.Context.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ExternalModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ExternalModel.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ExternalModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="ExternalModel.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ExternalModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -303,6 +330,10 @@
       <DependentUpon>201704070343573_AddNewModelForQuotations.vb</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201704070343573_AddNewModelForQuotations.vb" />
+    <Compile Include="Migrations\201704071648457_AddPostAbstract.Designer.vb">
+      <DependentUpon>201704071648457_AddPostAbstract.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704071648457_AddPostAbstract.vb" />
     <Compile Include="Migrations\Configuration.vb" />
     <Compile Include="Model.Context.vb">
       <AutoGen>True</AutoGen>
@@ -338,7 +369,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Controllers\HomeController.vb" />
     <Compile Include="Providers\ApplicationOAuthProvider.vb" />
     <Compile Include="Quotations.vb">
       <DependentUpon>Model.tt</DependentUpon>
@@ -348,6 +378,15 @@
     </Compile>
     <Compile Include="Results\ChallengeResult.vb" />
     <Compile Include="Startup.vb" />
+    <Compile Include="VistaItem.vb">
+      <DependentUpon>ExternalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VistaItemComponent.vb">
+      <DependentUpon>ExternalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VistaItemComponents2.vb">
+      <DependentUpon>ExternalModel.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201704021646455_AddEnableUserField.resx">
@@ -358,6 +397,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704070343573_AddNewModelForQuotations.resx">
       <DependentUpon>201704070343573_AddNewModelForQuotations.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704071648457_AddPostAbstract.resx">
+      <DependentUpon>201704071648457_AddPostAbstract.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -370,6 +412,16 @@
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="ExternalModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ExternalModel.edmx</DependentUpon>
+      <LastGenOutput>ExternalModel.Context.vb</LastGenOutput>
+    </Content>
+    <Content Include="ExternalModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ExternalModel.edmx</DependentUpon>
+      <LastGenOutput>ExternalModel.vb</LastGenOutput>
+    </Content>
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -403,6 +455,13 @@
     <Content Include="Model.edmx.diagram">
       <DependentUpon>Model.edmx</DependentUpon>
     </Content>
+    <EntityDeploy Include="ExternalModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ExternalModel.Designer.vb</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="ExternalModel.edmx.diagram">
+      <DependentUpon>ExternalModel.edmx</DependentUpon>
+    </Content>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -419,7 +478,6 @@
       <DependentUpon>Model.edmx</DependentUpon>
       <LastGenOutput>Model.Context.vb</LastGenOutput>
     </Content>
-    <Content Include="Model.edmx.sql" />
     <Content Include="Model.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model.edmx</DependentUpon>

@@ -10,7 +10,7 @@
 Imports System
 Imports System.Collections.Generic
 
-Partial Public Class VistaItemComponents
+Partial Public Class VistaItemComponent
     Public Property SkuArticulo As String
     Public Property SkuComponente As String
     Public Property ITEMDESC As String
@@ -23,5 +23,6 @@ Partial Public Class VistaItemComponents
     Public Property Nivel2 As Nullable(Of Integer)
     Public Property Nivel3 As Nullable(Of Integer)
     Public Property Parent As String
+    Public Property Id As Long
 
 End Class
