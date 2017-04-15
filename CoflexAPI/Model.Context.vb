@@ -11,21 +11,17 @@ Imports System
 Imports System.Data.Entity
 Imports System.Data.Entity.Infrastructure
 
-Partial Public Class Entities
+Partial Public Class CoflexDBEntities1
     Inherits DbContext
 
     Public Sub New()
-        MyBase.New("name=Entities")
+        MyBase.New("name=CoflexDBEntities1")
     End Sub
 
     Protected Overrides Sub OnModelCreating(modelBuilder As DbModelBuilder)
         Throw New UnintentionalCodeFirstException()
     End Sub
 
-    Public Overridable Property AspNetRoles() As DbSet(Of AspNetRoles)
-    Public Overridable Property AspNetUserClaims() As DbSet(Of AspNetUserClaims)
-    Public Overridable Property AspNetUserLogins() As DbSet(Of AspNetUserLogins)
-    Public Overridable Property AspNetUsers() As DbSet(Of AspNetUsers)
     Public Overridable Property Items() As DbSet(Of Items)
     Public Overridable Property ItemsComponents() As DbSet(Of ItemsComponents)
     Public Overridable Property Quotations() As DbSet(Of Quotations)

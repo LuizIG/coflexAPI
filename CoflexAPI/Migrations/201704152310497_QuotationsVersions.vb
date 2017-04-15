@@ -3,7 +3,7 @@ Imports System.Data.Entity.Migrations
 Imports Microsoft.VisualBasic
 
 Namespace Migrations
-    Public Partial Class AddTableQuotations
+    Public Partial Class QuotationsVersions
         Inherits DbMigration
     
         Public Overrides Sub Up()

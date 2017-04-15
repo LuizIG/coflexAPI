@@ -6,14 +6,14 @@ Imports System.Resources
 
 Namespace Migrations
     <GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")>
-    Public NotInheritable Partial Class AddPostAbstract
+    Public NotInheritable Partial Class ChangeModel
         Implements IMigrationMetadata
     
-        Private ReadOnly Resources As New ResourceManager(GetType(AddPostAbstract))
+        Private ReadOnly Resources As New ResourceManager(GetType(ChangeModel))
         
         Private ReadOnly Property IMigrationMetadata_Id() As String Implements IMigrationMetadata.Id
             Get
-                Return "201704071648457_AddPostAbstract"
+                Return "201704152100225_ChangeModel"
             End Get
         End Property
         

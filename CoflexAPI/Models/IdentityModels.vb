@@ -13,6 +13,7 @@ Public Class ApplicationUser
     Public Property MaternalSurname As String
     Public Property RegisterDate As DateTime
     Public Property ActiveUser As Boolean
+    Public Property Leader As String
 
     Public Async Function GenerateUserIdentityAsync(manager As UserManager(Of ApplicationUser), authenticationType As String) As Task(Of ClaimsIdentity)
         ' Tenga en cuenta que el valor de authenticationType debe coincidir con el definido en CookieAuthenticationOptions.AuthenticationType
@@ -27,13 +28,13 @@ Public Class ApplicationDbContext
     Public Sub New()
         MyBase.New("DefaultConnection", throwIfV1Schema:=False)
     End Sub
-    Public Overridable Property ItemsSet() As DbSet(Of Items)
-    Public Overridable Property ItemsComponentsSet() As DbSet(Of ItemsComponents)
 
     Public Shared Function Create() As ApplicationDbContext
-        Return New ApplicationDbContext()
+        Return New ApplicationDbContext
     End Function
 
     Public Property Quotations As System.Data.Entity.DbSet(Of Quotations)
     Public Property QuotationVersions As System.Data.Entity.DbSet(Of QuotationVersions)
+    Public Property Items As System.Data.Entity.DbSet(Of Items)
+    Public Property ItemsComponents As System.Data.Entity.DbSet(Of ItemsComponents)
 End Class

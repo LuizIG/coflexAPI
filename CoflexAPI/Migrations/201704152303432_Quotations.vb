@@ -3,16 +3,29 @@ Imports System.Data.Entity.Migrations
 Imports Microsoft.VisualBasic
 
 Namespace Migrations
-    Public Partial Class AddNewModelForQuotations
+    Public Partial Class Quotations
         Inherits DbMigration
     
         Public Overrides Sub Up()
+            CreateTable(
+                "dbo.Quotations",
+                Function(c) New With
+                    {
+                        .Id = c.Int(nullable := False, identity := True),
+                        .AspNetUsersId = c.String(),
+                        .ClientId = c.String(),
+                        .ClientName = c.String(),
+                        ._Date = c.DateTime(name := "Date", nullable := False),
+                        .Status = c.Int(nullable := False)
+                    }) _
+                .PrimaryKey(Function(t) t.Id)
+            
             CreateTable(
                 "dbo.QuotationVersions",
                 Function(c) New With
                     {
                         .Id = c.Int(nullable := False, identity := True),
-                        .QuotationId = c.Int(nullable := False),
+                        .QuotationsId = c.Int(nullable := False),
                         .VersionNumber = c.String(),
                         .ExchangeRate = c.Double(nullable := False),
                         ._Date = c.DateTime(name := "Date", nullable := False),
@@ -20,15 +33,15 @@ Namespace Migrations
                         .UseStndCost = c.Boolean(nullable := False)
                     }) _
                 .PrimaryKey(Function(t) t.Id) _
-                .ForeignKey("dbo.Quotations", Function(t) t.QuotationId, cascadeDelete := True) _
-                .Index(Function(t) t.QuotationId)
+                .ForeignKey("dbo.Quotations", Function(t) t.QuotationsId, cascadeDelete := True) _
+                .Index(Function(t) t.QuotationsId)
             
             CreateTable(
                 "dbo.Items",
                 Function(c) New With
                     {
                         .Id = c.Int(nullable := False, identity := True),
-                        .QuotationVersionId = c.Int(nullable := False),
+                        .QuotationVersionsId = c.Int(nullable := False),
                         .ItemNumber = c.String(),
                         .Sku = c.String(),
                         .ItemDescription = c.String(),
@@ -37,19 +50,19 @@ Namespace Migrations
                         .Status = c.String()
                     }) _
                 .PrimaryKey(Function(t) t.Id) _
-                .ForeignKey("dbo.QuotationVersions", Function(t) t.QuotationVersionId, cascadeDelete := True) _
-                .Index(Function(t) t.QuotationVersionId)
+                .ForeignKey("dbo.QuotationVersions", Function(t) t.QuotationVersionsId, cascadeDelete := True) _
+                .Index(Function(t) t.QuotationVersionsId)
             
             CreateTable(
                 "dbo.ItemsComponents",
                 Function(c) New With
                     {
                         .Id = c.Int(nullable := False, identity := True),
-                        .ItemsId = c.Int(nullable := False),
                         .SkuComponent = c.String(),
                         .ItemDescription = c.String(),
                         .Quantity = c.Int(nullable := False),
                         .UM = c.String(),
+                        .ItemsId = c.Int(nullable := False),
                         .StndCost = c.Double(nullable := False),
                         .CurrCost = c.Double(nullable := False),
                         .Result = c.Double(nullable := False),
@@ -61,26 +74,19 @@ Namespace Migrations
                 .ForeignKey("dbo.Items", Function(t) t.ItemsId, cascadeDelete := True) _
                 .Index(Function(t) t.ItemsId)
             
-            AddColumn("dbo.Quotations", "AspNetUsersId", Function(c) c.String())
-            AddColumn("dbo.Quotations", "ClientId", Function(c) c.String())
-            AddColumn("dbo.Quotations", "Date", Function(c) c.DateTime(nullable := False))
-            AddColumn("dbo.Quotations", "Status", Function(c) c.Int(nullable := False))
         End Sub
         
         Public Overrides Sub Down()
-            DropForeignKey("dbo.QuotationVersions", "QuotationId", "dbo.Quotations")
-            DropForeignKey("dbo.Items", "QuotationVersionId", "dbo.QuotationVersions")
+            DropForeignKey("dbo.QuotationVersions", "QuotationsId", "dbo.Quotations")
+            DropForeignKey("dbo.Items", "QuotationVersionsId", "dbo.QuotationVersions")
             DropForeignKey("dbo.ItemsComponents", "ItemsId", "dbo.Items")
             DropIndex("dbo.ItemsComponents", New String() { "ItemsId" })
-            DropIndex("dbo.Items", New String() { "QuotationVersionId" })
-            DropIndex("dbo.QuotationVersions", New String() { "QuotationId" })
-            DropColumn("dbo.Quotations", "Status")
-            DropColumn("dbo.Quotations", "Date")
-            DropColumn("dbo.Quotations", "ClientId")
-            DropColumn("dbo.Quotations", "AspNetUsersId")
+            DropIndex("dbo.Items", New String() { "QuotationVersionsId" })
+            DropIndex("dbo.QuotationVersions", New String() { "QuotationsId" })
             DropTable("dbo.ItemsComponents")
             DropTable("dbo.Items")
             DropTable("dbo.QuotationVersions")
+            DropTable("dbo.Quotations")
         End Sub
     End Class
 End Namespace

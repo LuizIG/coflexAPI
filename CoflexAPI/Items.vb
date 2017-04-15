@@ -12,7 +12,7 @@ Imports System.Collections.Generic
 
 Partial Public Class Items
     Public Property Id As Integer
-    Public Property QuotationVersionId As Integer
+    Public Property QuotationVersionsId As Integer
     Public Property ItemNumber As String
     Public Property Sku As String
     Public Property ItemDescription As String

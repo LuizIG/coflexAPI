@@ -264,23 +264,10 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.vb" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.vb" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.vb" />
-    <Compile Include="AspNetRoles.vb">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AspNetUserClaims.vb">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AspNetUserLogins.vb">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AspNetUsers.vb">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\AccountController.vb" />
     <Compile Include="Controllers\HomeController.vb" />
+    <Compile Include="Controllers\ItemsComponentsController.vb" />
     <Compile Include="Controllers\ItemsController.vb" />
-    <Compile Include="Controllers\QuotationItemsComponentsController.vb" />
-    <Compile Include="Controllers\QuotationItemsController.vb" />
     <Compile Include="Controllers\QuotationsController.vb" />
     <Compile Include="Controllers\QuotationVersionsController.vb" />
     <Compile Include="Controllers\RolesController.vb" />
@@ -293,22 +280,18 @@
     <Compile Include="ItemsComponents.vb">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201704021646455_AddEnableUserField.Designer.vb">
-      <DependentUpon>201704021646455_AddEnableUserField.vb</DependentUpon>
+    <Compile Include="Migrations\201704152100225_ChangeModel.Designer.vb">
+      <DependentUpon>201704152100225_ChangeModel.vb</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201704021646455_AddEnableUserField.vb" />
-    <Compile Include="Migrations\201704070237325_AddTableQuotations.Designer.vb">
-      <DependentUpon>201704070237325_AddTableQuotations.vb</DependentUpon>
+    <Compile Include="Migrations\201704152100225_ChangeModel.vb" />
+    <Compile Include="Migrations\201704152303432_Quotations.Designer.vb">
+      <DependentUpon>201704152303432_Quotations.vb</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201704070237325_AddTableQuotations.vb" />
-    <Compile Include="Migrations\201704070343573_AddNewModelForQuotations.Designer.vb">
-      <DependentUpon>201704070343573_AddNewModelForQuotations.vb</DependentUpon>
+    <Compile Include="Migrations\201704152303432_Quotations.vb" />
+    <Compile Include="Migrations\201704152310497_QuotationsVersions.Designer.vb">
+      <DependentUpon>201704152310497_QuotationsVersions.vb</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201704070343573_AddNewModelForQuotations.vb" />
-    <Compile Include="Migrations\201704071648457_AddPostAbstract.Designer.vb">
-      <DependentUpon>201704071648457_AddPostAbstract.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704071648457_AddPostAbstract.vb" />
+    <Compile Include="Migrations\201704152310497_QuotationsVersions.vb" />
     <Compile Include="Migrations\Configuration.vb" />
     <Compile Include="Model.Context.vb">
       <AutoGen>True</AutoGen>
@@ -316,11 +299,11 @@
       <DependentUpon>Model.Context.tt</DependentUpon>
     </Compile>
     <Compile Include="Model.Designer.vb">
-      <DependentUpon>Model.edmx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Model2.vb">
+    <Compile Include="Model.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.tt</DependentUpon>
@@ -355,17 +338,14 @@
     <Compile Include="Startup.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201704021646455_AddEnableUserField.resx">
-      <DependentUpon>201704021646455_AddEnableUserField.vb</DependentUpon>
+    <EmbeddedResource Include="Migrations\201704152100225_ChangeModel.resx">
+      <DependentUpon>201704152100225_ChangeModel.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704070237325_AddTableQuotations.resx">
-      <DependentUpon>201704070237325_AddTableQuotations.vb</DependentUpon>
+    <EmbeddedResource Include="Migrations\201704152303432_Quotations.resx">
+      <DependentUpon>201704152303432_Quotations.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704070343573_AddNewModelForQuotations.resx">
-      <DependentUpon>201704070343573_AddNewModelForQuotations.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704071648457_AddPostAbstract.resx">
-      <DependentUpon>201704071648457_AddPostAbstract.vb</DependentUpon>
+    <EmbeddedResource Include="Migrations\201704152310497_QuotationsVersions.resx">
+      <DependentUpon>201704152310497_QuotationsVersions.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -430,7 +410,7 @@
     <Content Include="Model.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model.edmx</DependentUpon>
-      <LastGenOutput>Model2.vb</LastGenOutput>
+      <LastGenOutput>Model.vb</LastGenOutput>
     </Content>
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

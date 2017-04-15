@@ -12,11 +12,11 @@ Imports System.Collections.Generic
 
 Partial Public Class ItemsComponents
     Public Property Id As Integer
-    Public Property ItemsId As Integer
     Public Property SkuComponent As String
     Public Property ItemDescription As String
     Public Property Quantity As Integer
     Public Property UM As String
+    Public Property ItemsId As Integer
     Public Property StndCost As Double
     Public Property CurrCost As Double
     Public Property Result As Double

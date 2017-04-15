@@ -6,20 +6,20 @@ Imports System.Resources
 
 Namespace Migrations
     <GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")>
-    Public NotInheritable Partial Class AddTableQuotations
+    Public NotInheritable Partial Class Quotations
         Implements IMigrationMetadata
     
-        Private ReadOnly Resources As New ResourceManager(GetType(AddTableQuotations))
+        Private ReadOnly Resources As New ResourceManager(GetType(Quotations))
         
         Private ReadOnly Property IMigrationMetadata_Id() As String Implements IMigrationMetadata.Id
             Get
-                Return "201704070237325_AddTableQuotations"
+                Return "201704152303432_Quotations"
             End Get
         End Property
         
         Private ReadOnly Property IMigrationMetadata_Source() As String Implements IMigrationMetadata.Source
             Get
-                Return Resources.GetString("Source")
+                Return Nothing
             End Get
         End Property
         

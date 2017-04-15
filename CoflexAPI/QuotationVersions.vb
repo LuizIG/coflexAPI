@@ -12,7 +12,7 @@ Imports System.Collections.Generic
 
 Partial Public Class QuotationVersions
     Public Property Id As Integer
-    Public Property QuotationId As Integer
+    Public Property QuotationsId As Integer
     Public Property VersionNumber As String
     Public Property ExchangeRate As Double
     Public Property [Date] As Date

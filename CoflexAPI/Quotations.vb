@@ -14,6 +14,7 @@ Partial Public Class Quotations
     Public Property Id As Integer
     Public Property AspNetUsersId As String
     Public Property ClientId As String
+    Public Property ClientName As String
     Public Property [Date] As Date
     Public Property Status As Integer
 

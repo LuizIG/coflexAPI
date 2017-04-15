@@ -4,69 +4,13 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="CoflexDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="AspNetRoles">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
-        </EntityType>
-        <EntityType Name="AspNetUserClaims">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="ClaimType" Type="nvarchar(max)" />
-          <Property Name="ClaimValue" Type="nvarchar(max)" />
-        </EntityType>
-        <EntityType Name="AspNetUserLogins">
-          <Key>
-            <PropertyRef Name="LoginProvider" />
-            <PropertyRef Name="ProviderKey" />
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-        </EntityType>
-        <EntityType Name="AspNetUserRoles">
-          <Key>
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="RoleId" />
-          </Key>
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
-        </EntityType>
-        <EntityType Name="AspNetUsers">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Name" Type="nvarchar(max)" />
-          <Property Name="PaternalSurname" Type="nvarchar(max)" />
-          <Property Name="MaternalSurname" Type="nvarchar(max)" />
-          <Property Name="RegisterDate" Type="datetime" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="256" />
-          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
-          <Property Name="PasswordHash" Type="nvarchar(max)" />
-          <Property Name="SecurityStamp" Type="nvarchar(max)" />
-          <Property Name="PhoneNumber" Type="nvarchar(max)" />
-          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
-          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
-          <Property Name="LockoutEndDateUtc" Type="datetime" />
-          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
-          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
-          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
-          <Property Name="ActiveUser" Type="bit" Nullable="false" />
-        </EntityType>
+      <Schema Namespace="CoflexDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Items">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="QuotationVersionId" Type="int" Nullable="false" />
+          <Property Name="QuotationVersionsId" Type="int" Nullable="false" />
           <Property Name="ItemNumber" Type="nvarchar(max)" />
           <Property Name="Sku" Type="nvarchar(max)" />
           <Property Name="ItemDescription" Type="nvarchar(max)" />
@@ -79,11 +23,11 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ItemsId" Type="int" Nullable="false" />
           <Property Name="SkuComponent" Type="nvarchar(max)" />
           <Property Name="ItemDescription" Type="nvarchar(max)" />
           <Property Name="Quantity" Type="int" Nullable="false" />
           <Property Name="UM" Type="nvarchar(max)" />
+          <Property Name="ItemsId" Type="int" Nullable="false" />
           <Property Name="StndCost" Type="float" Nullable="false" />
           <Property Name="CurrCost" Type="float" Nullable="false" />
           <Property Name="Result" Type="float" Nullable="false" />
@@ -98,6 +42,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AspNetUsersId" Type="nvarchar(max)" />
           <Property Name="ClientId" Type="nvarchar(max)" />
+          <Property Name="ClientName" Type="nvarchar(max)" />
           <Property Name="Date" Type="datetime" Nullable="false" />
           <Property Name="Status" Type="int" Nullable="false" />
         </EntityType>
@@ -106,70 +51,14 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="QuotationId" Type="int" Nullable="false" />
+          <Property Name="QuotationsId" Type="int" Nullable="false" />
           <Property Name="VersionNumber" Type="nvarchar(max)" />
           <Property Name="ExchangeRate" Type="float" Nullable="false" />
           <Property Name="Date" Type="datetime" Nullable="false" />
           <Property Name="Status" Type="int" Nullable="false" />
           <Property Name="UseStndCost" Type="bit" Nullable="false" />
         </EntityType>
-        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserClaims">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserLogins">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
-          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetRoles">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserRoles">
-              <PropertyRef Name="RoleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserRoles">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_Items_dbo_QuotationVersions_QuotationVersionId">
+        <Association Name="FK_dbo_Items_dbo_QuotationVersions_QuotationVersionsId">
           <End Role="QuotationVersions" Type="Self.QuotationVersions" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -179,7 +68,7 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Items">
-              <PropertyRef Name="QuotationVersionId" />
+              <PropertyRef Name="QuotationVersionsId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -197,7 +86,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_QuotationVersions_dbo_Quotations_QuotationId">
+        <Association Name="FK_dbo_QuotationVersions_dbo_Quotations_QuotationsId">
           <End Role="Quotations" Type="Self.Quotations" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -207,37 +96,16 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="QuotationVersions">
-              <PropertyRef Name="QuotationId" />
+              <PropertyRef Name="QuotationsId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="CoflexDBModelStoreContainer">
-          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemsComponents" EntityType="Self.ItemsComponents" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Quotations" EntityType="Self.Quotations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QuotationVersions" EntityType="Self.QuotationVersions" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
-            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
-            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_Items_dbo_QuotationVersions_QuotationVersionId" Association="Self.FK_dbo_Items_dbo_QuotationVersions_QuotationVersionId">
+          <AssociationSet Name="FK_dbo_Items_dbo_QuotationVersions_QuotationVersionsId" Association="Self.FK_dbo_Items_dbo_QuotationVersions_QuotationVersionsId">
             <End Role="QuotationVersions" EntitySet="QuotationVersions" />
             <End Role="Items" EntitySet="Items" />
           </AssociationSet>
@@ -245,127 +113,40 @@
             <End Role="Items" EntitySet="Items" />
             <End Role="ItemsComponents" EntitySet="ItemsComponents" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_QuotationVersions_dbo_Quotations_QuotationId" Association="Self.FK_dbo_QuotationVersions_dbo_Quotations_QuotationId">
+          <AssociationSet Name="FK_dbo_QuotationVersions_dbo_Quotations_QuotationsId" Association="Self.FK_dbo_QuotationVersions_dbo_Quotations_QuotationsId">
             <End Role="Quotations" EntitySet="Quotations" />
             <End Role="QuotationVersions" EntitySet="QuotationVersions" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CoflexDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="AspNetRoles" EntityType="CoflexDBModel.AspNetRoles" />
-          <EntitySet Name="AspNetUserClaims" EntityType="CoflexDBModel.AspNetUserClaims" />
-          <EntitySet Name="AspNetUserLogins" EntityType="CoflexDBModel.AspNetUserLogins" />
-          <EntitySet Name="AspNetUsers" EntityType="CoflexDBModel.AspNetUsers" />
-          <EntitySet Name="Items" EntityType="CoflexDBModel.Items" />
-          <EntitySet Name="ItemsComponents" EntityType="CoflexDBModel.ItemsComponents" />
-          <EntitySet Name="Quotations" EntityType="CoflexDBModel.Quotations" />
-          <EntitySet Name="QuotationVersions" EntityType="CoflexDBModel.QuotationVersions" />
-          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="CoflexDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="CoflexDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_Items_dbo_QuotationVersions_QuotationVersionId" Association="CoflexDBModel.FK_dbo_Items_dbo_QuotationVersions_QuotationVersionId">
-            <End Role="QuotationVersions" EntitySet="QuotationVersions" />
-            <End Role="Items" EntitySet="Items" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_ItemsComponents_dbo_Items_ItemsId" Association="CoflexDBModel.FK_dbo_ItemsComponents_dbo_Items_ItemsId">
-            <End Role="Items" EntitySet="Items" />
-            <End Role="ItemsComponents" EntitySet="ItemsComponents" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_QuotationVersions_dbo_Quotations_QuotationId" Association="CoflexDBModel.FK_dbo_QuotationVersions_dbo_Quotations_QuotationId">
-            <End Role="Quotations" EntitySet="Quotations" />
-            <End Role="QuotationVersions" EntitySet="QuotationVersions" />
-          </AssociationSet>
-          <AssociationSet Name="AspNetUserRoles" Association="CoflexDBModel.AspNetUserRoles">
-            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-          </AssociationSet>
-        </EntityContainer>
-        <EntityType Name="AspNetRoles">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUsers" Relationship="CoflexDBModel.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
-        </EntityType>
-        <EntityType Name="AspNetUserClaims">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUsers" Relationship="CoflexDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
-        </EntityType>
-        <EntityType Name="AspNetUserLogins">
-          <Key>
-            <PropertyRef Name="LoginProvider" />
-            <PropertyRef Name="ProviderKey" />
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUsers" Relationship="CoflexDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
-        </EntityType>
-        <EntityType Name="AspNetUsers">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PaternalSurname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="MaternalSurname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="RegisterDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
-          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
-          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
-          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
-          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
-          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
-          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="ActiveUser" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="AspNetUserClaims" Relationship="CoflexDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
-          <NavigationProperty Name="AspNetUserLogins" Relationship="CoflexDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
-          <NavigationProperty Name="AspNetRoles" Relationship="CoflexDBModel.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
-        </EntityType>
         <EntityType Name="Items">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="QuotationVersionId" Type="Int32" Nullable="false" />
+          <Property Name="QuotationVersionsId" Type="Int32" Nullable="false" />
           <Property Name="ItemNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Sku" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ItemDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Quantity" Type="Int16" Nullable="false" />
           <Property Name="UM" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ItemsComponents" Relationship="CoflexDBModel.FK_dbo_ItemsComponents_dbo_Items_ItemsId" FromRole="Items" ToRole="ItemsComponents" />
+          <NavigationProperty Name="ItemsComponents" Relationship="Self.FK_dbo_ItemsComponents_dbo_Items_ItemsId" FromRole="Items" ToRole="ItemsComponents" />
         </EntityType>
         <EntityType Name="ItemsComponents">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ItemsId" Type="Int32" Nullable="false" />
           <Property Name="SkuComponent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ItemDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Quantity" Type="Int32" Nullable="false" />
           <Property Name="UM" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ItemsId" Type="Int32" Nullable="false" />
           <Property Name="StndCost" Type="Double" Nullable="false" />
           <Property Name="CurrCost" Type="Double" Nullable="false" />
           <Property Name="Result" Type="Double" Nullable="false" />
@@ -380,70 +161,43 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="AspNetUsersId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ClientId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClientName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Status" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="QuotationVersions" Relationship="CoflexDBModel.FK_dbo_QuotationVersions_dbo_Quotations_QuotationId" FromRole="Quotations" ToRole="QuotationVersions" />
+          <NavigationProperty Name="QuotationVersions" Relationship="Self.FK_dbo_QuotationVersions_dbo_Quotations_QuotationsId" FromRole="Quotations" ToRole="QuotationVersions" />
         </EntityType>
         <EntityType Name="QuotationVersions">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="QuotationId" Type="Int32" Nullable="false" />
+          <Property Name="QuotationsId" Type="Int32" Nullable="false" />
           <Property Name="VersionNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ExchangeRate" Type="Double" Nullable="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Status" Type="Int32" Nullable="false" />
           <Property Name="UseStndCost" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Items" Relationship="CoflexDBModel.FK_dbo_Items_dbo_QuotationVersions_QuotationVersionId" FromRole="QuotationVersions" ToRole="Items" />
+          <NavigationProperty Name="Items" Relationship="Self.FK_dbo_Items_dbo_QuotationVersions_QuotationVersionsId" FromRole="QuotationVersions" ToRole="Items" />
         </EntityType>
-        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-          <End Type="CoflexDBModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
+        <Association Name="FK_dbo_Items_dbo_QuotationVersions_QuotationVersionsId">
+          <End Role="QuotationVersions" Type="Self.QuotationVersions" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="CoflexDBModel.AspNetUserClaims" Role="AspNetUserClaims" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserClaims">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-          <End Type="CoflexDBModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="CoflexDBModel.AspNetUserLogins" Role="AspNetUserLogins" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserLogins">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_Items_dbo_QuotationVersions_QuotationVersionId">
-          <End Type="CoflexDBModel.QuotationVersions" Role="QuotationVersions" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="CoflexDBModel.Items" Role="Items" Multiplicity="*" />
+          <End Role="Items" Type="Self.Items" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="QuotationVersions">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Items">
-              <PropertyRef Name="QuotationVersionId" />
+              <PropertyRef Name="QuotationVersionsId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_dbo_ItemsComponents_dbo_Items_ItemsId">
-          <End Type="CoflexDBModel.Items" Role="Items" Multiplicity="1">
+          <End Role="Items" Type="Self.Items" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="CoflexDBModel.ItemsComponents" Role="ItemsComponents" Multiplicity="*" />
+          <End Role="ItemsComponents" Type="Self.ItemsComponents" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Items">
               <PropertyRef Name="Id" />
@@ -453,146 +207,104 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_QuotationVersions_dbo_Quotations_QuotationId">
-          <End Type="CoflexDBModel.Quotations" Role="Quotations" Multiplicity="1">
+        <Association Name="FK_dbo_QuotationVersions_dbo_Quotations_QuotationsId">
+          <End Role="Quotations" Type="Self.Quotations" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="CoflexDBModel.QuotationVersions" Role="QuotationVersions" Multiplicity="*" />
+          <End Role="QuotationVersions" Type="Self.QuotationVersions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Quotations">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="QuotationVersions">
-              <PropertyRef Name="QuotationId" />
+              <PropertyRef Name="QuotationsId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="AspNetUserRoles">
-          <End Type="CoflexDBModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
-          <End Type="CoflexDBModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
-        </Association>
+        <EntityContainer Name="CoflexDBEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Items" EntityType="Self.Items" />
+          <EntitySet Name="ItemsComponents" EntityType="Self.ItemsComponents" />
+          <EntitySet Name="Quotations" EntityType="Self.Quotations" />
+          <EntitySet Name="QuotationVersions" EntityType="Self.QuotationVersions" />
+          <AssociationSet Name="FK_dbo_Items_dbo_QuotationVersions_QuotationVersionsId" Association="Self.FK_dbo_Items_dbo_QuotationVersions_QuotationVersionsId">
+            <End Role="QuotationVersions" EntitySet="QuotationVersions" />
+            <End Role="Items" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ItemsComponents_dbo_Items_ItemsId" Association="Self.FK_dbo_ItemsComponents_dbo_Items_ItemsId">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="ItemsComponents" EntitySet="ItemsComponents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_QuotationVersions_dbo_Quotations_QuotationsId" Association="Self.FK_dbo_QuotationVersions_dbo_Quotations_QuotationsId">
+            <End Role="Quotations" EntitySet="Quotations" />
+            <End Role="QuotationVersions" EntitySet="QuotationVersions" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="CoflexDBModelStoreContainer" CdmEntityContainer="Entities">
-          <EntitySetMapping Name="AspNetRoles">
-            <EntityTypeMapping TypeName="CoflexDBModel.AspNetRoles">
-              <MappingFragment StoreEntitySet="AspNetRoles">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AspNetUserClaims">
-            <EntityTypeMapping TypeName="CoflexDBModel.AspNetUserClaims">
-              <MappingFragment StoreEntitySet="AspNetUserClaims">
-                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
-                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AspNetUserLogins">
-            <EntityTypeMapping TypeName="CoflexDBModel.AspNetUserLogins">
-              <MappingFragment StoreEntitySet="AspNetUserLogins">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
-                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AspNetUsers">
-            <EntityTypeMapping TypeName="CoflexDBModel.AspNetUsers">
-              <MappingFragment StoreEntitySet="AspNetUsers">
-                <ScalarProperty Name="ActiveUser" ColumnName="ActiveUser" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
-                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
-                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
-                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
-                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
-                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
-                <ScalarProperty Name="MaternalSurname" ColumnName="MaternalSurname" />
-                <ScalarProperty Name="PaternalSurname" ColumnName="PaternalSurname" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CoflexDBModelStoreContainer" CdmEntityContainer="CoflexDBEntities1">
           <EntitySetMapping Name="Items">
             <EntityTypeMapping TypeName="CoflexDBModel.Items">
               <MappingFragment StoreEntitySet="Items">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="UM" ColumnName="UM" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="ItemDescription" ColumnName="ItemDescription" />
-                <ScalarProperty Name="Sku" ColumnName="Sku" />
-                <ScalarProperty Name="ItemNumber" ColumnName="ItemNumber" />
-                <ScalarProperty Name="QuotationVersionId" ColumnName="QuotationVersionId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="QuotationVersionsId" ColumnName="QuotationVersionsId" />
+                <ScalarProperty Name="ItemNumber" ColumnName="ItemNumber" />
+                <ScalarProperty Name="Sku" ColumnName="Sku" />
+                <ScalarProperty Name="ItemDescription" ColumnName="ItemDescription" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="UM" ColumnName="UM" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ItemsComponents">
             <EntityTypeMapping TypeName="CoflexDBModel.ItemsComponents">
               <MappingFragment StoreEntitySet="ItemsComponents">
-                <ScalarProperty Name="Lvl3" ColumnName="Lvl3" />
-                <ScalarProperty Name="Lvl2" ColumnName="Lvl2" />
-                <ScalarProperty Name="Lvl1" ColumnName="Lvl1" />
-                <ScalarProperty Name="Result" ColumnName="Result" />
-                <ScalarProperty Name="CurrCost" ColumnName="CurrCost" />
-                <ScalarProperty Name="StndCost" ColumnName="StndCost" />
-                <ScalarProperty Name="UM" ColumnName="UM" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="ItemDescription" ColumnName="ItemDescription" />
-                <ScalarProperty Name="SkuComponent" ColumnName="SkuComponent" />
-                <ScalarProperty Name="ItemsId" ColumnName="ItemsId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SkuComponent" ColumnName="SkuComponent" />
+                <ScalarProperty Name="ItemDescription" ColumnName="ItemDescription" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="UM" ColumnName="UM" />
+                <ScalarProperty Name="ItemsId" ColumnName="ItemsId" />
+                <ScalarProperty Name="StndCost" ColumnName="StndCost" />
+                <ScalarProperty Name="CurrCost" ColumnName="CurrCost" />
+                <ScalarProperty Name="Result" ColumnName="Result" />
+                <ScalarProperty Name="Lvl1" ColumnName="Lvl1" />
+                <ScalarProperty Name="Lvl2" ColumnName="Lvl2" />
+                <ScalarProperty Name="Lvl3" ColumnName="Lvl3" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Quotations">
             <EntityTypeMapping TypeName="CoflexDBModel.Quotations">
               <MappingFragment StoreEntitySet="Quotations">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
-                <ScalarProperty Name="AspNetUsersId" ColumnName="AspNetUsersId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AspNetUsersId" ColumnName="AspNetUsersId" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="QuotationVersions">
             <EntityTypeMapping TypeName="CoflexDBModel.QuotationVersions">
               <MappingFragment StoreEntitySet="QuotationVersions">
-                <ScalarProperty Name="UseStndCost" ColumnName="UseStndCost" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="ExchangeRate" ColumnName="ExchangeRate" />
-                <ScalarProperty Name="VersionNumber" ColumnName="VersionNumber" />
-                <ScalarProperty Name="QuotationId" ColumnName="QuotationId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="QuotationsId" ColumnName="QuotationsId" />
+                <ScalarProperty Name="VersionNumber" ColumnName="VersionNumber" />
+                <ScalarProperty Name="ExchangeRate" ColumnName="ExchangeRate" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="UseStndCost" ColumnName="UseStndCost" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="CoflexDBModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
-            <EndProperty Name="AspNetUsers">
-              <ScalarProperty Name="Id" ColumnName="UserId" />
-            </EndProperty>
-            <EndProperty Name="AspNetRoles">
-              <ScalarProperty Name="Id" ColumnName="RoleId" />
-            </EndProperty>
-          </AssociationSetMapping>
         </EntityContainerMapping>
-</Mapping></edmx:Mappings>
+      </Mapping>
+    </edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
@@ -606,7 +318,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
       </DesignerInfoPropertySet>
     </Options>

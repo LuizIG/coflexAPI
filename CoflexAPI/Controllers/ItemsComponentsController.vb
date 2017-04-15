@@ -10,20 +10,20 @@ Imports System.Web.Http.Description
 Imports CoflexAPI
 
 Namespace Controllers
-    Public Class QuotationItemsComponentsController
+    Public Class ItemsComponentsController
         Inherits System.Web.Http.ApiController
 
-        Private db As New ApplicationDbContext
+        Private db As New CoflexDBEntities1
 
-        ' GET: api/QuotationItemsComponents
-        Function GetItemsComponentsSet() As IQueryable(Of ItemsComponents)
-            Return db.ItemsComponentsSet
+        ' GET: api/ItemsComponents
+        Function GetItemsComponents() As IQueryable(Of ItemsComponents)
+            Return db.ItemsComponents
         End Function
 
-        ' GET: api/QuotationItemsComponents/5
+        ' GET: api/ItemsComponents/5
         <ResponseType(GetType(ItemsComponents))>
         Async Function GetItemsComponents(ByVal id As Integer) As Task(Of IHttpActionResult)
-            Dim itemsComponents As ItemsComponents = Await db.ItemsComponentsSet.FindAsync(id)
+            Dim itemsComponents As ItemsComponents = Await db.ItemsComponents.FindAsync(id)
             If IsNothing(itemsComponents) Then
                 Return NotFound()
             End If
@@ -31,7 +31,7 @@ Namespace Controllers
             Return Ok(itemsComponents)
         End Function
 
-        ' PUT: api/QuotationItemsComponents/5
+        ' PUT: api/ItemsComponents/5
         <ResponseType(GetType(Void))>
         Async Function PutItemsComponents(ByVal id As Integer, ByVal itemsComponents As ItemsComponents) As Task(Of IHttpActionResult)
             If Not ModelState.IsValid Then
@@ -57,28 +57,28 @@ Namespace Controllers
             Return StatusCode(HttpStatusCode.NoContent)
         End Function
 
-        ' POST: api/QuotationItemsComponents
+        ' POST: api/ItemsComponents
         <ResponseType(GetType(ItemsComponents))>
         Async Function PostItemsComponents(ByVal itemsComponents As ItemsComponents) As Task(Of IHttpActionResult)
             If Not ModelState.IsValid Then
                 Return BadRequest(ModelState)
             End If
 
-            db.ItemsComponentsSet.Add(itemsComponents)
+            db.ItemsComponents.Add(itemsComponents)
             Await db.SaveChangesAsync()
 
             Return CreatedAtRoute("DefaultApi", New With {.id = itemsComponents.Id}, itemsComponents)
         End Function
 
-        ' DELETE: api/QuotationItemsComponents/5
+        ' DELETE: api/ItemsComponents/5
         <ResponseType(GetType(ItemsComponents))>
         Async Function DeleteItemsComponents(ByVal id As Integer) As Task(Of IHttpActionResult)
-            Dim itemsComponents As ItemsComponents = Await db.ItemsComponentsSet.FindAsync(id)
+            Dim itemsComponents As ItemsComponents = Await db.ItemsComponents.FindAsync(id)
             If IsNothing(itemsComponents) Then
                 Return NotFound()
             End If
 
-            db.ItemsComponentsSet.Remove(itemsComponents)
+            db.ItemsComponents.Remove(itemsComponents)
             Await db.SaveChangesAsync()
 
             Return Ok(itemsComponents)
@@ -92,7 +92,7 @@ Namespace Controllers
         End Sub
 
         Private Function ItemsComponentsExists(ByVal id As Integer) As Boolean
-            Return db.ItemsComponentsSet.Count(Function(e) e.Id = id) > 0
+            Return db.ItemsComponents.Count(Function(e) e.Id = id) > 0
         End Function
     End Class
 End Namespace

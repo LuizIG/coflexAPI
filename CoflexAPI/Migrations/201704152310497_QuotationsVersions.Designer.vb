@@ -6,14 +6,14 @@ Imports System.Resources
 
 Namespace Migrations
     <GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")>
-    Public NotInheritable Partial Class AddEnableUserField
+    Public NotInheritable Partial Class QuotationsVersions
         Implements IMigrationMetadata
     
-        Private ReadOnly Resources As New ResourceManager(GetType(AddEnableUserField))
+        Private ReadOnly Resources As New ResourceManager(GetType(QuotationsVersions))
         
         Private ReadOnly Property IMigrationMetadata_Id() As String Implements IMigrationMetadata.Id
             Get
-                Return "201704021646455_AddEnableUserField"
+                Return "201704152310497_QuotationsVersions"
             End Get
         End Property
         

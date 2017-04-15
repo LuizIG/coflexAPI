@@ -13,7 +13,7 @@ Namespace Controllers
     Public Class QuotationVersionsController
         Inherits System.Web.Http.ApiController
 
-        Private db As New ApplicationDbContext
+        Private db As New CoflexDBEntities1
 
         ' GET: api/QuotationVersions
         Function GetQuotationVersions() As IQueryable(Of QuotationVersions)
