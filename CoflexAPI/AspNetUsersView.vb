@@ -10,15 +10,12 @@
 Imports System
 Imports System.Collections.Generic
 
-Partial Public Class QuotationVersions
-    Public Property Id As Integer
-    Public Property QuotationsId As Integer
-    Public Property VersionNumber As Integer
-    Public Property ExchangeRate As Double
-    Public Property [Date] As Date
-    Public Property Status As Integer
-    Public Property UseStndCost As Boolean
-
-    Public Overridable Property Items As ICollection(Of Items) = New HashSet(Of Items)
+Partial Public Class AspNetUsersView
+    Public Property Id As String
+    Public Property Name As String
+    Public Property PaternalSurname As String
+    Public Property MaternalSurname As String
+    Public Property Email As String
+    Public Property Leader As String
 
 End Class

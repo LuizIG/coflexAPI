@@ -5,14 +5,16 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="9731afc65d78418b96f1ca8c13a3b206" Name="Diagram1">
-        <EntityTypeShape EntityType="CoflexDBModel.Items" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="CoflexDBModel.ItemsComponents" Width="1.5" PointX="7.5" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="CoflexDBModel.Quotations" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="CoflexDBModel.QuotationVersions" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
-        <AssociationConnector Association="CoflexDBModel.FK_dbo_Items_dbo_QuotationVersions_QuotationVersionsId" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="CoflexDBModel.Items" Width="1.5" PointX="4.5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CoflexDBModel.ItemsComponents" Width="1.5" PointX="6.625" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CoflexDBModel.Quotations" Width="1.5" PointX="0.5" PointY="0.5" IsExpanded="true" />
         <AssociationConnector Association="CoflexDBModel.FK_dbo_ItemsComponents_dbo_Items_ItemsId" ManuallyRouted="false" />
-        <AssociationConnector Association="CoflexDBModel.FK_dbo_QuotationVersions_dbo_Quotations_QuotationsId" ManuallyRouted="false" />
-      </Diagram>
+        <EntityTypeShape EntityType="CoflexDBModel.QuotationVersions" Width="1.5" PointX="2.5" PointY="0.5" />
+        <AssociationConnector Association="CoflexDBModel.FK_dbo_Items_dbo_QuotationVersions_QuotationVersionsId" />
+        <AssociationConnector Association="CoflexDBModel.FK_dbo_QuotationVersions_dbo_Quotations_QuotationsId" />
+        <EntityTypeShape EntityType="CoflexDBModel.AspNetUsersView" Width="1.5" PointX="1.625" PointY="4.125" />
+        <AssociationConnector Association="CoflexDBModel.AspNetUsersViewQuotations" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

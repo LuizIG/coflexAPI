@@ -14,7 +14,7 @@ Partial Public Class ItemsComponents
     Public Property Id As Integer
     Public Property SkuComponent As String
     Public Property ItemDescription As String
-    Public Property Quantity As Integer
+    Public Property Quantity As Decimal
     Public Property UM As String
     Public Property ItemsId As Integer
     Public Property StndCost As Double

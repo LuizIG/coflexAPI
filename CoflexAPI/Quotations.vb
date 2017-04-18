@@ -19,5 +19,6 @@ Partial Public Class Quotations
     Public Property Status As Integer
 
     Public Overridable Property QuotationVersions As ICollection(Of QuotationVersions) = New HashSet(Of QuotationVersions)
+    Public Overridable Property AspNetUsersView As AspNetUsersView
 
 End Class

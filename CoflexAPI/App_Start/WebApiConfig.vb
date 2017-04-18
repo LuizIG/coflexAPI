@@ -13,7 +13,6 @@ Public Module WebApiConfig
         config.SetDocumentationProvider(New XmlDocumentationProvider(HttpContext.Current.Server.MapPath("bin/CoflexAPI.xml")))
         ' Rutas de Web API
         config.MapHttpAttributeRoutes()
-
         config.Routes.MapHttpRoute(
             name:="DefaultApi",
             routeTemplate:="api/{controller}/{id}",

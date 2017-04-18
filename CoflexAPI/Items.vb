@@ -16,7 +16,7 @@ Partial Public Class Items
     Public Property ItemNumber As String
     Public Property Sku As String
     Public Property ItemDescription As String
-    Public Property Quantity As Short
+    Public Property Quantity As Decimal
     Public Property UM As String
     Public Property Status As String
 

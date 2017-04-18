@@ -26,5 +26,6 @@ Partial Public Class CoflexDBEntities1
     Public Overridable Property ItemsComponents() As DbSet(Of ItemsComponents)
     Public Overridable Property Quotations() As DbSet(Of Quotations)
     Public Overridable Property QuotationVersions() As DbSet(Of QuotationVersions)
+    Public Overridable Property AspNetUsersView() As DbSet(Of AspNetUsersView)
 
 End Class

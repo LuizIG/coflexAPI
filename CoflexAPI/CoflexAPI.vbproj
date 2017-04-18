@@ -264,6 +264,9 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.vb" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.vb" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.vb" />
+    <Compile Include="AspNetUsersView.vb">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AccountController.vb" />
     <Compile Include="Controllers\HomeController.vb" />
     <Compile Include="Controllers\ItemsComponentsController.vb" />
@@ -308,6 +311,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\QuotationsBindingModel.vb" />
     <Compile Include="Models\RoleBindingModels.vb" />
     <Compile Include="Models\AccountBindingModels.vb" />
     <Compile Include="Models\AccountViewModels.vb" />
