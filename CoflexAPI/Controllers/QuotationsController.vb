@@ -9,6 +9,7 @@ Imports System.Web.Http
 Imports System.Web.Http.Description
 Imports CoflexAPI
 Imports CoflexAPI.QuotationsBindingModel
+Imports Microsoft.AspNet.Identity
 Imports Microsoft.Owin.Security
 
 Namespace Controllers
@@ -66,6 +67,9 @@ Namespace Controllers
             If Not ModelState.IsValid Then
                 'Return BadRequest(ModelState)
             End If
+
+            Dim idUser As String = HttpContext.Current.User.Identity.GetUserId()
+
 
             Dim items As ICollection(Of Items)
             Dim modelItems = model.QuotationVersions().ItemsBindingModel
@@ -126,6 +130,7 @@ Namespace Controllers
                 .ClientId = model.ClientId,
                 .ClientName = model.ClientName,
                 .Status = 0,
+                .AspNetUsersId = idUser,
                 .QuotationVersions = quotationVersion
             }
 

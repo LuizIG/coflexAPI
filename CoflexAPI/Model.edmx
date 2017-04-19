@@ -35,6 +35,18 @@
           <Property Name="Lvl2" Type="int" Nullable="false" />
           <Property Name="Lvl3" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="NewComponents">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SkuComponente" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="IdQuotation" Type="int" Nullable="false" />
+          <Property Name="Uofm" Type="nvarchar" MaxLength="9" Nullable="false" />
+          <Property Name="StndCost" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="CurrntCost" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="Result" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+        </EntityType>
         <EntityType Name="Quotations">
           <Key>
             <PropertyRef Name="Id" />
@@ -113,9 +125,22 @@ advertencia 6002: La tabla o vista 'CoflexDB.dbo.AspNetUsersView' no tiene defin
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_NewComponents_Quotations">
+          <End Role="Quotations" Type="Self.Quotations" Multiplicity="1" />
+          <End Role="NewComponents" Type="Self.NewComponents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Quotations">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NewComponents">
+              <PropertyRef Name="IdQuotation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="CoflexDBModelStoreContainer">
           <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemsComponents" EntityType="Self.ItemsComponents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NewComponents" EntityType="Self.NewComponents" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Quotations" EntityType="Self.Quotations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QuotationVersions" EntityType="Self.QuotationVersions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsersView" EntityType="Self.AspNetUsersView" store:Type="Views" store:Schema="dbo">
@@ -139,6 +164,10 @@ advertencia 6002: La tabla o vista 'CoflexDB.dbo.AspNetUsersView' no tiene defin
           <AssociationSet Name="FK_dbo_QuotationVersions_dbo_Quotations_QuotationsId" Association="Self.FK_dbo_QuotationVersions_dbo_Quotations_QuotationsId">
             <End Role="Quotations" EntitySet="Quotations" />
             <End Role="QuotationVersions" EntitySet="QuotationVersions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NewComponents_Quotations" Association="Self.FK_NewComponents_Quotations">
+            <End Role="Quotations" EntitySet="Quotations" />
+            <End Role="NewComponents" EntitySet="NewComponents" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -225,6 +254,11 @@ advertencia 6002: La tabla o vista 'CoflexDB.dbo.AspNetUsersView' no tiene defin
             <End Role="AspNetUsersView" EntitySet="AspNetUsersView" />
             <End Role="Quotations" EntitySet="Quotations" />
           </AssociationSet>
+          <EntitySet Name="NewComponents" EntityType="CoflexDBModel.NewComponents" />
+          <AssociationSet Name="FK_NewComponents_Quotations" Association="CoflexDBModel.FK_NewComponents_Quotations">
+            <End Role="Quotations" EntitySet="Quotations" />
+            <End Role="NewComponents" EntitySet="NewComponents" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="QuotationVersions">
           <Key>
@@ -287,6 +321,30 @@ advertencia 6002: La tabla o vista 'CoflexDB.dbo.AspNetUsersView' no tiene defin
             </Principal>
             <Dependent Role="Quotations">
               <PropertyRef Name="AspNetUsersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="NewComponents">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SkuComponente" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="IdQuotation" Type="Int32" Nullable="false" />
+          <Property Name="Uofm" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="true" />
+          <Property Name="StndCost" Type="Decimal" Nullable="false" Precision="19" Scale="5" />
+          <Property Name="CurrntCost" Type="Decimal" Nullable="false" Precision="19" Scale="5" />
+          <Property Name="Result" Type="Decimal" Nullable="false" Precision="19" Scale="5" />
+        </EntityType>
+        <Association Name="FK_NewComponents_Quotations">
+          <End Type="CoflexDBModel.Quotations" Role="Quotations" Multiplicity="1" />
+          <End Type="CoflexDBModel.NewComponents" Role="NewComponents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Quotations">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NewComponents">
+              <PropertyRef Name="IdQuotation" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -361,6 +419,19 @@ advertencia 6002: La tabla o vista 'CoflexDB.dbo.AspNetUsersView' no tiene defin
                 <ScalarProperty Name="MaternalSurname" ColumnName="MaternalSurname" />
                 <ScalarProperty Name="PaternalSurname" ColumnName="PaternalSurname" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NewComponents">
+            <EntityTypeMapping TypeName="CoflexDBModel.NewComponents">
+              <MappingFragment StoreEntitySet="NewComponents">
+                <ScalarProperty Name="Result" ColumnName="Result" />
+                <ScalarProperty Name="CurrntCost" ColumnName="CurrntCost" />
+                <ScalarProperty Name="StndCost" ColumnName="StndCost" />
+                <ScalarProperty Name="Uofm" ColumnName="Uofm" />
+                <ScalarProperty Name="IdQuotation" ColumnName="IdQuotation" />
+                <ScalarProperty Name="SkuComponente" ColumnName="SkuComponente" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
