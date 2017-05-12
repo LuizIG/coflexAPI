@@ -19,6 +19,7 @@ Partial Public Class Items
     Public Property Quantity As Decimal
     Public Property UM As String
     Public Property Status As String
+    Public Property ProfitMargin As Nullable(Of Double)
 
     Public Overridable Property ItemsComponents As ICollection(Of ItemsComponents) = New HashSet(Of ItemsComponents)
 

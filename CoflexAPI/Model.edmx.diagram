@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="9731afc65d78418b96f1ca8c13a3b206" Name="Diagram1">
+      <Diagram DiagramId="9731afc65d78418b96f1ca8c13a3b206" Name="Diagram1" ZoomLevel="77">
         <EntityTypeShape EntityType="CoflexDBModel.Items" Width="1.5" PointX="4.5" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CoflexDBModel.ItemsComponents" Width="1.5" PointX="6.625" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CoflexDBModel.Quotations" Width="1.5" PointX="0.5" PointY="0.5" IsExpanded="true" />
@@ -16,6 +16,9 @@
         <AssociationConnector Association="CoflexDBModel.AspNetUsersViewQuotations" />
         <EntityTypeShape EntityType="CoflexDBModel.NewComponents" Width="1.5" PointX="4.625" PointY="7.125" />
         <AssociationConnector Association="CoflexDBModel.FK_NewComponents_Quotations" />
+        <EntityTypeShape EntityType="CoflexDBModel.NewComponentsView" Width="1.5" PointX="9" PointY="7.375" />
+        <EntityTypeShape EntityType="CoflexDBModel.CatUOFMView" Width="1.5" PointX="12.25" PointY="2.625" />
+        <EntityTypeShape EntityType="CoflexDBModel.QuotationSummaryView" Width="1.5" PointX="13" PointY="5.5" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -16,14 +16,14 @@ Namespace Controllers
         Private db As New CoflexDBEntities1
 
         ' GET: api/NewComponents
-        Function GetNewComponents() As IQueryable(Of NewComponents)
-            Return db.NewComponents
+        Function GetNewComponents() As IQueryable(Of NewComponentsView)
+            Return db.NewComponentsView
         End Function
 
         ' GET: api/NewComponents/5
-        <ResponseType(GetType(NewComponents))>
+        <ResponseType(GetType(NewComponentsView))>
         Async Function GetNewComponents(ByVal id As Integer) As Task(Of IHttpActionResult)
-            Dim newComponents As NewComponents = Await db.NewComponents.FindAsync(id)
+            Dim newComponents As NewComponentsView = Await db.NewComponentsView.FindAsync(id)
             If IsNothing(newComponents) Then
                 Return NotFound()
             End If
@@ -42,6 +42,7 @@ Namespace Controllers
                 .CurrntCost = newComponentModel.StndCost,
                 .IdQuotation = newComponentModel.IdQuotation,
                 .Uofm = newComponentModel.Uofm,
+                .ItemDesc = newComponentModel.ItemDesc,
                 .Result = newComponentModel.StndCost,
                 .StndCost = newComponentModel.StndCost,
                 .SkuComponente = newComponentModel.SkuComponente

@@ -38,6 +38,74 @@ Namespace Controllers
             Return Ok(quotationVersions)
         End Function
 
+        ' PATCH: api/QuotationVersions/5
+        <HttpPatch>
+        <ResponseType(GetType(Void))>
+        Async Function PatchUpdateStatus(ByVal id As Integer, ByVal status As Integer) As Task(Of IHttpActionResult)
+
+            Dim version = Await db.QuotationVersions.FindAsync(id)
+            version.Status = status
+
+
+            If (status > 2) Then
+
+                Dim listofversions = Await db.QuotationVersions.Where(Function(x) x.QuotationsId = version.QuotationsId).ToListAsync
+
+                For Each ver In listofversions
+                    ver.Status = IIf(ver.Id = id, status, 2) 'Propuesta decartada
+                    db.Entry(ver).State = EntityState.Modified
+                    Try
+                        Await db.SaveChangesAsync()
+                    Catch ex As DbUpdateConcurrencyException
+                        If Not (QuotationVersionsExists(id)) Then
+                            Return NotFound()
+                        Else
+                            Throw
+                        End If
+                    End Try
+                Next
+
+                Dim Quotation = Await db.Quotations.FindAsync(version.QuotationsId)
+
+                If status = 3 Then 'Aceptada
+                    Quotation.Status = 1
+
+                End If
+
+                If status = 4 Then 'Cancelada
+                    Quotation.Status = 2
+                End If
+
+                db.Entry(Quotation).State = EntityState.Modified
+                Try
+                    Await db.SaveChangesAsync()
+                Catch ex As DbUpdateConcurrencyException
+                    If Not (QuotationVersionsExists(id)) Then
+                        Return NotFound()
+                    Else
+                        Throw
+                    End If
+                End Try
+
+
+            Else
+                db.Entry(version).State = EntityState.Modified
+                Try
+                    Await db.SaveChangesAsync()
+                Catch ex As DbUpdateConcurrencyException
+                    If Not (QuotationVersionsExists(id)) Then
+                        Return NotFound()
+                    Else
+                        Throw
+                    End If
+                End Try
+
+            End If
+            Return StatusCode(HttpStatusCode.NoContent)
+
+        End Function
+
+
         ' PUT: api/QuotationVersions/5
         <ResponseType(GetType(Void))>
         Async Function PutQuotationVersions(ByVal id As Integer, ByVal quotationVersions As QuotationVersionIdBindingModel) As Task(Of IHttpActionResult)
@@ -45,16 +113,13 @@ Namespace Controllers
                 Return BadRequest(ModelState)
             End If
 
-            Dim qVersion As QuotationVersions = Await db.QuotationVersions.FindAsync(id)
-
+            Dim qVersions = Await db.QuotationVersions.Where(Function(c) c.Id = id).ToListAsync
+            Dim qVersion = qVersions.Item(0)
 
             'Borra los items anteriores :v
-            For Each item In qVersion.Items
-                db.Items.Remove(item)
-                Await db.SaveChangesAsync()
-            Next
+            db.Items.RemoveRange(qVersion.Items)
 
-            qVersion.Date = DateTime.Now
+            qVersion.LastModificationDate = DateTime.Now
             qVersion.ExchangeRate = quotationVersions.ExchangeRate
 
             Dim modelItems = quotationVersions.ItemsBindingModel
@@ -67,6 +132,23 @@ Namespace Controllers
                 Dim modelItemComponets = item.ItemsComponents
 
                 For Each itemComponent In modelItemComponets
+
+                    If itemComponent.FinalCost = Nothing Then
+                        itemComponent.FinalCost = 0.0
+                    End If
+
+                    If itemComponent.RBCost = Nothing Then
+                        itemComponent.RBCost = 0
+                    End If
+
+                    If itemComponent.RACost = Nothing Then
+                        itemComponent.RACost = 0
+                    End If
+
+                    If itemComponent.Shipping = Nothing Then
+                        itemComponent.Shipping = 0
+                    End If
+
                     listItemComponents.Add(New ItemsComponents With {
                         .ItemDescription = itemComponent.ItemDescription,
                         .CurrCost = itemComponent.CurrCost,
@@ -77,7 +159,11 @@ Namespace Controllers
                         .Result = itemComponent.Result,
                         .SkuComponent = itemComponent.SkuComponent,
                         .UM = itemComponent.UM,
-                        .StndCost = itemComponent.StndCost
+                        .StndCost = itemComponent.StndCost,
+                        .FinalCost = itemComponent.FinalCost,
+                        .RACost = itemComponent.RACost,
+                        .RBCost = itemComponent.RBCost,
+                        .Shipping = itemComponent.Shipping
                     })
                 Next
                 itemsComponests = listItemComponents
@@ -91,6 +177,7 @@ Namespace Controllers
                     .Sku = item.Sku,
                     .UM = item.UM,
                     .Status = item.Status,
+                    .ProfitMargin = item.ProfitMargin,
                     .ItemsComponents = itemsComponests
                 })
                 x = x + 1
@@ -129,6 +216,23 @@ Namespace Controllers
                 Dim modelItemComponets = item.ItemsComponents
 
                 For Each itemComponent In modelItemComponets
+
+                    If itemComponent.FinalCost = Nothing Then
+                        itemComponent.FinalCost = 0.0
+                    End If
+
+                    If itemComponent.RBCost = Nothing Then
+                        itemComponent.RBCost = 0
+                    End If
+
+                    If itemComponent.RACost = Nothing Then
+                        itemComponent.RACost = 0
+                    End If
+
+                    If itemComponent.Shipping = Nothing Then
+                        itemComponent.Shipping = 0
+                    End If
+
                     listItemComponents.Add(New ItemsComponents With {
                         .ItemDescription = itemComponent.ItemDescription,
                         .CurrCost = itemComponent.CurrCost,
@@ -139,7 +243,11 @@ Namespace Controllers
                         .Result = itemComponent.Result,
                         .SkuComponent = itemComponent.SkuComponent,
                         .UM = itemComponent.UM,
-                        .StndCost = itemComponent.StndCost
+                        .StndCost = itemComponent.StndCost,
+                        .FinalCost = itemComponent.FinalCost,
+                        .RBCost = itemComponent.RBCost,
+                        .RACost = itemComponent.RACost,
+                        .Shipping = itemComponent.Shipping
                     })
                 Next
                 itemsComponests = listItemComponents
@@ -151,6 +259,7 @@ Namespace Controllers
                     .Sku = item.Sku,
                     .UM = item.UM,
                     .Status = item.Status,
+                    .ProfitMargin = item.ProfitMargin,
                     .ItemsComponents = itemsComponests
                 })
                 x = x + 1
@@ -164,10 +273,9 @@ Namespace Controllers
                 .UseStndCost = quotationVersionsModel.UseStndCost,
                 .VersionNumber = count,
                 .Items = items,
-                .QuotationsId = quotationVersionsModel.IdQuotaions
+                .QuotationsId = quotationVersionsModel.IdQuotaions,
+                .LastModificationDate = DateTime.Now
             }
-
-
             db.QuotationVersions.Add(qv)
             Await db.SaveChangesAsync()
 

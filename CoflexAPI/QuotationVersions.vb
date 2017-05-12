@@ -18,6 +18,7 @@ Partial Public Class QuotationVersions
     Public Property [Date] As Date
     Public Property Status As Integer
     Public Property UseStndCost As Boolean
+    Public Property LastModificationDate As Date
 
     Public Overridable Property Items As ICollection(Of Items) = New HashSet(Of Items)
 

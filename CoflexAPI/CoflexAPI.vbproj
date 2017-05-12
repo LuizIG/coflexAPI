@@ -267,14 +267,20 @@
     <Compile Include="AspNetUsersView.vb">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="CatUOFMView.vb">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AccountController.vb" />
+    <Compile Include="Controllers\CatUOFMController.vb" />
     <Compile Include="Controllers\HomeController.vb" />
     <Compile Include="Controllers\ItemsComponentsController.vb" />
     <Compile Include="Controllers\ItemsController.vb" />
     <Compile Include="Controllers\NewComponentsController.vb" />
     <Compile Include="Controllers\QuotationsController.vb" />
+    <Compile Include="Controllers\QuotationSummaryController.vb" />
     <Compile Include="Controllers\QuotationVersionsController.vb" />
     <Compile Include="Controllers\RolesController.vb" />
+    <Compile Include="Controllers\StatusController.vb" />
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -296,6 +302,38 @@
       <DependentUpon>201704152310497_QuotationsVersions.vb</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201704152310497_QuotationsVersions.vb" />
+    <Compile Include="Migrations\201704190541387_migratinoNewendpoint.Designer.vb">
+      <DependentUpon>201704190541387_migratinoNewendpoint.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704190541387_migratinoNewendpoint.vb" />
+    <Compile Include="Migrations\201704210343417_costostandar.Designer.vb">
+      <DependentUpon>201704210343417_costostandar.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704210343417_costostandar.vb" />
+    <Compile Include="Migrations\201704212358276_nuevosCampos.Designer.vb">
+      <DependentUpon>201704212358276_nuevosCampos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704212358276_nuevosCampos.vb" />
+    <Compile Include="Migrations\201704220005434_nuevosCampos_otravez.Designer.vb">
+      <DependentUpon>201704220005434_nuevosCampos_otravez.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704220005434_nuevosCampos_otravez.vb" />
+    <Compile Include="Migrations\201704230415508_AddMarginField.Designer.vb">
+      <DependentUpon>201704230415508_AddMarginField.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704230415508_AddMarginField.vb" />
+    <Compile Include="Migrations\201704280421109_campoIdCliente.Designer.vb">
+      <DependentUpon>201704280421109_campoIdCliente.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704280421109_campoIdCliente.vb" />
+    <Compile Include="Migrations\201705042100433_addNewDateField.Designer.vb">
+      <DependentUpon>201705042100433_addNewDateField.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705042100433_addNewDateField.vb" />
+    <Compile Include="Migrations\201705050839073_shipping.Designer.vb">
+      <DependentUpon>201705050839073_shipping.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705050839073_shipping.vb" />
     <Compile Include="Migrations\Configuration.vb" />
     <Compile Include="Model.Context.vb">
       <AutoGen>True</AutoGen>
@@ -336,8 +374,14 @@
     <Compile Include="NewComponents.vb">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="NewComponentsView.vb">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Providers\ApplicationOAuthProvider.vb" />
     <Compile Include="Quotations.vb">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QuotationSummaryView.vb">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="QuotationVersions.vb">
@@ -355,6 +399,30 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704152310497_QuotationsVersions.resx">
       <DependentUpon>201704152310497_QuotationsVersions.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704190541387_migratinoNewendpoint.resx">
+      <DependentUpon>201704190541387_migratinoNewendpoint.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704210343417_costostandar.resx">
+      <DependentUpon>201704210343417_costostandar.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704212358276_nuevosCampos.resx">
+      <DependentUpon>201704212358276_nuevosCampos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704220005434_nuevosCampos_otravez.resx">
+      <DependentUpon>201704220005434_nuevosCampos_otravez.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704230415508_AddMarginField.resx">
+      <DependentUpon>201704230415508_AddMarginField.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704280421109_campoIdCliente.resx">
+      <DependentUpon>201704280421109_campoIdCliente.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705042100433_addNewDateField.resx">
+      <DependentUpon>201705042100433_addNewDateField.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705050839073_shipping.resx">
+      <DependentUpon>201705050839073_shipping.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

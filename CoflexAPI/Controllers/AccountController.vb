@@ -23,8 +23,10 @@ Public Class AccountController
     End Sub
 
     Public Sub New(userMan As ApplicationUserManager, accessTokenFormatType As ISecureDataFormat(Of AuthenticationTicket))
+
         Me.UserManager = userMan
         Me.AccessTokenFormat = accessTokenFormatType
+
     End Sub
 
     Public Property UserManager() As ApplicationUserManager
@@ -95,7 +97,6 @@ Public Class AccountController
         Dim userItem = Await UserManager.FindByIdAsync(model.UserId)
         Dim remove As IdentityResult = Await UserManager.RemovePasswordAsync(model.UserId)
         Dim result As IdentityResult = Await UserManager.AddPasswordAsync(model.UserId, model.NewPassword)
-        'Dim result As IdentityResult = Await UserManager.AddPasswordAsync(model.UserId, model.NewPassword)
         If Not result.Succeeded Then
             Return GetErrorResult(result)
         End If
@@ -126,6 +127,11 @@ Public Class AccountController
             .RegisterDate = DateTime.Now,
             .ActiveUser = True
         }
+
+        If (model.Leader IsNot Nothing) Then
+            user.Leader = model.Leader
+        End If
+
         Dim result As IdentityResult = Await UserManager.CreateAsync(user, model.Password)
         Dim userCreated = UserManager.FindByEmail(model.Email)
         For Each role In model.Roles
@@ -210,6 +216,26 @@ Public Class AccountController
     ''' Obtiene una lista de todos los usuarios activos
     ''' </summary>
     ''' <returns></returns>
+    <Authorize()>
+    <HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)>
+    <HttpGet>
+    <Route("UsersByLeader")>
+    Public Async Function GetUsersListByLeader() As Task(Of List(Of ApplicationUser))
+        Dim idLeader = HttpContext.Current.User.Identity.GetUserId
+        Dim usersList = UserManager.Users.Where(Function(x) x.Leader = idLeader).ToList
+
+        For Each usuario In usersList
+            usuario.Name = usuario.Name & " " & usuario.PaternalSurname & " " & usuario.MaternalSurname
+        Next
+
+        Return usersList
+    End Function
+
+    ' GET api/Account/Users
+    ''' <summary>
+    ''' Obtiene una lista de todos los usuarios activos
+    ''' </summary>
+    ''' <returns></returns>
     <Authorize(Roles:="Administrador")>
     <HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)>
     <HttpGet>
@@ -235,6 +261,37 @@ Public Class AccountController
                 userWRole.Roles.Add(roleInUser)
             Next
             usersRoleModelList.Add(userWRole)
+        Next
+        Return usersRoleModelList
+    End Function
+
+
+    ' GET api/Account/Leaders
+    ''' <summary>
+    ''' Obtiene una lista de todos los usuarios activos
+    ''' </summary>
+    ''' <returns></returns>
+    <HttpGet>
+    <Route("Leaders")>
+    Public Async Function GetLeadersList() As Task(Of List(Of UserViewModelWithRole))
+
+        Dim usersRoleModelList As New List(Of UserViewModelWithRole)
+        Dim RoleManager = New RoleManager(Of IdentityRole)(New RoleStore(Of IdentityRole)())
+
+        For Each userItem In UserManager.Users.ToList
+            If (UserManager().IsInRole(userItem.Id, "Gerente de Ventas")) Then
+                Dim userWRole = New UserViewModelWithRole With {
+                    .Id = userItem.Id,
+                    .Name = userItem.Name,
+                    .PaternalSurname = userItem.PaternalSurname,
+                    .MaternalSurname = userItem.MaternalSurname,
+                    .Email = userItem.Email,
+                    .Enable = userItem.ActiveUser
+                }
+                userWRole.Roles = Nothing
+                usersRoleModelList.Add(userWRole)
+
+            End If
         Next
         Return usersRoleModelList
     End Function

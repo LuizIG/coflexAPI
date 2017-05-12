@@ -23,5 +23,9 @@ Partial Public Class ItemsComponents
     Public Property Lvl1 As Integer
     Public Property Lvl2 As Integer
     Public Property Lvl3 As Integer
+    Public Property RBCost As Nullable(Of Integer)
+    Public Property FinalCost As Nullable(Of Double)
+    Public Property RACost As Nullable(Of Integer)
+    Public Property Shipping As Double
 
 End Class

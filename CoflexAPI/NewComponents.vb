@@ -18,5 +18,6 @@ Partial Public Class NewComponents
     Public Property StndCost As Decimal
     Public Property CurrntCost As Decimal
     Public Property Result As Decimal
+    Public Property ItemDesc As String
 
 End Class

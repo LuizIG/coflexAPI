@@ -10,6 +10,7 @@ Imports System.Web.Http.Description
 Imports CoflexAPI
 Imports CoflexAPI.QuotationsBindingModel
 Imports Microsoft.AspNet.Identity
+Imports Microsoft.AspNet.Identity.EntityFramework
 Imports Microsoft.Owin.Security
 
 Namespace Controllers
@@ -19,11 +20,35 @@ Namespace Controllers
         Private db As New CoflexDBEntities1
 
         ' GET: api/Quotations
+        <Authorize>
         Function GetQuotations() As IQueryable(Of Quotations)
-            Return db.Quotations
+
+            Dim idUser = HttpContext.Current.User.Identity.GetUserId
+
+            Dim userscontext As New ApplicationDbContext()
+            Dim userStore = New UserStore(Of ApplicationUser)(userscontext)
+            Dim userManager = New UserManager(Of ApplicationUser)(userStore)
+
+            If (userManager.IsInRole(idUser, "Administrador")) Then 'Trae todas las cotizaciones
+                Return db.Quotations.OrderBy(Function(x) x.Status).ThenByDescending(Function(x) x.Date)
+            ElseIf (userManager.IsInRole(idUser, "Gerente Ventas")) Then 'Trae las cotizaciones de los vendedores
+                Dim misVendedores = userscontext.Users.Where(Function(x) x.Leader = idUser)
+                Dim Vendedores As New List(Of String)
+                Dim cotizacions = db.Quotations.Where(Function(x) x.AspNetUsersId = idUser)
+                For Each vendedor In misVendedores
+                    cotizacions.Union(db.Quotations.Where(Function(x) x.AspNetUsersId = vendedor.Id))
+                Next
+                Return cotizacions.OrderBy(Function(x) x.Status).ThenByDescending(Function(x) x.Date)
+
+            ElseIf ((userManager.IsInRole(idUser, "Vendedor"))) Then 'Trae solo las cotizaciones del vendedor
+                Return db.Quotations.Where(Function(x) x.AspNetUsersId = idUser).OrderBy(Function(x) x.Status).ThenByDescending(Function(x) x.Date)
+            Else
+                Return StatusCode(HttpStatusCode.NoContent)
+            End If
         End Function
 
         ' GET: api/Quotations/5
+        <Authorize>
         <ResponseType(GetType(Quotations))>
         Async Function GetQuotations(ByVal id As Integer) As Task(Of IHttpActionResult)
             db.Configuration.LazyLoadingEnabled = False
@@ -36,6 +61,7 @@ Namespace Controllers
         End Function
 
         ' PUT: api/Quotations/5
+        <Authorize>
         <ResponseType(GetType(Void))>
         Async Function PutQuotations(ByVal id As Integer, ByVal quotations As Quotations) As Task(Of IHttpActionResult)
             If Not ModelState.IsValid Then
@@ -61,7 +87,34 @@ Namespace Controllers
             Return StatusCode(HttpStatusCode.NoContent)
         End Function
 
+        ' PUT: api/Quotations/5
+        <Authorize>
+        <ResponseType(GetType(Void))>
+        Async Function PutQuotations(ByVal id As Integer, ByVal UserId As String) As Task(Of IHttpActionResult)
+            If Not ModelState.IsValid Then
+                Return BadRequest(ModelState)
+            End If
+
+            Dim Quotation As Quotations = Await db.Quotations.FindAsync(id)
+            Quotation.AspNetUsersId = UserId
+
+            db.Entry(Quotation).State = EntityState.Modified
+
+            Try
+                Await db.SaveChangesAsync()
+            Catch ex As DbUpdateConcurrencyException
+                If Not (QuotationsExists(id)) Then
+                    Return NotFound()
+                Else
+                    Throw
+                End If
+            End Try
+
+            Return StatusCode(HttpStatusCode.NoContent)
+        End Function
+
         ' POST: api/Quotations
+        <Authorize>
         <ResponseType(GetType(Quotations))>
         Async Function PostQuotations(ByVal model As QuotationBindingModel) As Task(Of IHttpActionResult)
             If Not ModelState.IsValid Then
@@ -69,7 +122,6 @@ Namespace Controllers
             End If
 
             Dim idUser As String = HttpContext.Current.User.Identity.GetUserId()
-
 
             Dim items As ICollection(Of Items)
             Dim modelItems = model.QuotationVersions().ItemsBindingModel
@@ -82,6 +134,23 @@ Namespace Controllers
                 Dim modelItemComponets = item.ItemsComponents
 
                 For Each itemComponent In modelItemComponets
+
+                    If itemComponent.FinalCost = Nothing Then
+                        itemComponent.FinalCost = 0.0
+                    End If
+
+                    If itemComponent.RBCost = Nothing Then
+                        itemComponent.RBCost = 0
+                    End If
+
+                    If itemComponent.RACost = Nothing Then
+                        itemComponent.RACost = 0
+                    End If
+
+                    If itemComponent.Shipping = Nothing Then
+                        itemComponent.Shipping = 0
+                    End If
+
                     listItemComponents.Add(New ItemsComponents With {
                         .ItemDescription = itemComponent.ItemDescription,
                         .CurrCost = itemComponent.CurrCost,
@@ -92,7 +161,11 @@ Namespace Controllers
                         .Result = itemComponent.Result,
                         .SkuComponent = itemComponent.SkuComponent,
                         .UM = itemComponent.UM,
-                        .StndCost = itemComponent.StndCost
+                        .StndCost = itemComponent.StndCost,
+                        .FinalCost = itemComponent.FinalCost,
+                        .RACost = itemComponent.RACost,
+                        .RBCost = itemComponent.RBCost,
+                        .Shipping = itemComponent.Shipping
                     })
                 Next
                 itemsComponests = listItemComponents
@@ -104,7 +177,8 @@ Namespace Controllers
                     .Sku = item.Sku,
                     .UM = item.UM,
                     .Status = item.Status,
-                    .ItemsComponents = itemsComponests
+                    .ItemsComponents = itemsComponests,
+                    .ProfitMargin = item.ProfitMargin
                 })
                 x = x + 1
             Next
@@ -114,6 +188,7 @@ Namespace Controllers
             Dim qv As New QuotationVersions With {
                 .Date = DateTime.Now,
                 .Status = 0,
+                .LastModificationDate = Date.Now,
                 .ExchangeRate = model.QuotationVersions.ExchangeRate,
                 .UseStndCost = model.QuotationVersions.UseStndCost,
                 .VersionNumber = 1,
@@ -125,16 +200,18 @@ Namespace Controllers
             list.Add(qv)
             quotationVersion = list
 
+            Dim count = db.Quotations.Where(Function(y) y.ClientId = model.ClientId).Count + 1
+            Dim CoflexId = model.ClientName.Substring(0, 3) & "-" & Format(count, "#000")
+
             Dim q As New Quotations With {
                 .Date = DateTime.Now,
                 .ClientId = model.ClientId,
                 .ClientName = model.ClientName,
                 .Status = 0,
                 .AspNetUsersId = idUser,
-                .QuotationVersions = quotationVersion
+                .QuotationVersions = quotationVersion,
+                .CoflexId = CoflexId
             }
-
-
             db.Quotations.Add(q)
             Await db.SaveChangesAsync()
 

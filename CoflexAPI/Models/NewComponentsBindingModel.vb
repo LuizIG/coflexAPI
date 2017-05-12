@@ -11,6 +11,8 @@ Public Class NewComponentsBindingModel
     <Required>
     <Display(Name:="Unidad")>
     Public Property Uofm As String
+    <Display(Name:="Descripcion")>
+    Public Property ItemDesc As String
     <Required>
     <Display(Name:="Costo Estandar")>
     Public Property StndCost As Decimal

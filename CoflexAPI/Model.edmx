@@ -17,6 +17,7 @@
           <Property Name="Quantity" Type="numeric" Precision="19" Scale="5" Nullable="false" />
           <Property Name="UM" Type="nvarchar(max)" />
           <Property Name="Status" Type="nvarchar(max)" />
+          <Property Name="ProfitMargin" Type="float" />
         </EntityType>
         <EntityType Name="ItemsComponents">
           <Key>
@@ -34,6 +35,10 @@
           <Property Name="Lvl1" Type="int" Nullable="false" />
           <Property Name="Lvl2" Type="int" Nullable="false" />
           <Property Name="Lvl3" Type="int" Nullable="false" />
+          <Property Name="RBCost" Type="int" />
+          <Property Name="FinalCost" Type="float" />
+          <Property Name="RACost" Type="int" />
+          <Property Name="Shipping" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="NewComponents">
           <Key>
@@ -46,6 +51,7 @@
           <Property Name="StndCost" Type="numeric" Precision="19" Scale="5" Nullable="false" />
           <Property Name="CurrntCost" Type="numeric" Precision="19" Scale="5" Nullable="false" />
           <Property Name="Result" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="ItemDesc" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Quotations">
           <Key>
@@ -53,6 +59,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AspNetUsersId" Type="nvarchar" MaxLength="128" />
+          <Property Name="CoflexId" Type="nvarchar" MaxLength="8" />
           <Property Name="ClientId" Type="nvarchar(max)" />
           <Property Name="ClientName" Type="nvarchar(max)" />
           <Property Name="Date" Type="datetime" Nullable="false" />
@@ -67,11 +74,12 @@
           <Property Name="VersionNumber" Type="int" Nullable="false" />
           <Property Name="ExchangeRate" Type="float" Nullable="false" />
           <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="LastModificationDate" Type="datetime" Nullable="false" />
           <Property Name="Status" Type="int" Nullable="false" />
           <Property Name="UseStndCost" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'CoflexDB.dbo.AspNetUsersView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'CoflexDB2.dbo.AspNetUsersView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="AspNetUsersView">
           <Key>
             <PropertyRef Name="Id" />
@@ -82,6 +90,71 @@ advertencia 6002: La tabla o vista 'CoflexDB.dbo.AspNetUsersView' no tiene defin
           <Property Name="MaternalSurname" Type="nvarchar(max)" />
           <Property Name="Email" Type="nvarchar" MaxLength="256" />
           <Property Name="Leader" Type="nvarchar(max)" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'CoflexDB2.dbo.CatUOFMView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="CatUOFMView">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="UOMSCHDL" Type="varchar" MaxLength="50" />
+          <Property Name="UMSCHDSC" Type="varchar" MaxLength="50" />
+          <Property Name="Id" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'CoflexDB2.dbo.NewComponentsView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="NewComponentsView">
+          
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Parent" Type="varchar" MaxLength="31" />
+          <Property Name="SkuArticulo" Type="varchar" MaxLength="31" />
+          <Property Name="SkuComponente" Type="varchar" MaxLength="31" />
+          <Property Name="ITEMDESC" Type="varchar" MaxLength="101" />
+          <Property Name="QUANTITY_I" Type="numeric" Precision="19" Scale="5" />
+          <Property Name="UOFM" Type="varchar" MaxLength="9" />
+          <Property Name="StndCost" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="CURRCOST" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="RESULT" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="Nivel1" Type="smallint" />
+          <Property Name="Nivel2" Type="int" Nullable="false" />
+          <Property Name="Nivel3" Type="int" Nullable="false" />
+          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="RACost" Type="int" />
+          <Property Name="RBCost" Type="int" />
+          <Property Name="FinalCost" Type="float" />
+          <Property Name="Shipping" Type="float" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'CoflexDB2.dbo.QuotationSummaryView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="QuotationSummaryView">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Status" />
+            <PropertyRef Name="IdVersion" />
+            <PropertyRef Name="VersionNumber" />
+            <PropertyRef Name="ExchangeRate" />
+            <PropertyRef Name="Date" />
+            <PropertyRef Name="LastModificationDate" />
+            <PropertyRef Name="VStatus" />
+            <PropertyRef Name="QuotationStatusName" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="CoflexId" Type="nvarchar" MaxLength="8" />
+          <Property Name="ClientId" Type="nvarchar(max)" />
+          <Property Name="ClientName" Type="nvarchar(max)" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="Vendor" Type="nvarchar(max)" />
+          <Property Name="IdVersion" Type="int" Nullable="false" />
+          <Property Name="VersionNumber" Type="int" Nullable="false" />
+          <Property Name="ExchangeRate" Type="float" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="LastModificationDate" Type="datetime" Nullable="false" />
+          <Property Name="VStatus" Type="int" Nullable="false" />
+          <Property Name="Margin" Type="float" />
+          <Property Name="QuotationStatusName" Type="varchar" MaxLength="9" Nullable="false" />
+          <Property Name="QuotationVersionStatusName" Type="varchar" MaxLength="20" />
         </EntityType>
         <Association Name="FK_dbo_Items_dbo_QuotationVersions_QuotationVersionsId">
           <End Role="QuotationVersions" Type="Self.QuotationVersions" Multiplicity="1">
@@ -153,6 +226,53 @@ advertencia 6002: La tabla o vista 'CoflexDB.dbo.AspNetUsersView' no tiene defin
     [AspNetUsersView].[Leader] AS [Leader]
     FROM [dbo].[AspNetUsersView] AS [AspNetUsersView]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="CatUOFMView" EntityType="Self.CatUOFMView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [CatUOFMView].[UOMSCHDL] AS [UOMSCHDL], 
+    [CatUOFMView].[UMSCHDSC] AS [UMSCHDSC], 
+    [CatUOFMView].[Id] AS [Id]
+    FROM [dbo].[CatUOFMView] AS [CatUOFMView]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="NewComponentsView" EntityType="Self.NewComponentsView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [NewComponentsView].[Parent] AS [Parent], 
+    [NewComponentsView].[SkuArticulo] AS [SkuArticulo], 
+    [NewComponentsView].[SkuComponente] AS [SkuComponente], 
+    [NewComponentsView].[ITEMDESC] AS [ITEMDESC], 
+    [NewComponentsView].[QUANTITY_I] AS [QUANTITY_I], 
+    [NewComponentsView].[UOFM] AS [UOFM], 
+    [NewComponentsView].[StndCost] AS [StndCost], 
+    [NewComponentsView].[CURRCOST] AS [CURRCOST], 
+    [NewComponentsView].[RESULT] AS [RESULT], 
+    [NewComponentsView].[Nivel1] AS [Nivel1], 
+    [NewComponentsView].[Nivel2] AS [Nivel2], 
+    [NewComponentsView].[Nivel3] AS [Nivel3], 
+    [NewComponentsView].[Id] AS [Id], 
+    [NewComponentsView].[RACost] AS [RACost], 
+    [NewComponentsView].[RBCost] AS [RBCost], 
+    [NewComponentsView].[FinalCost] AS [FinalCost], 
+    [NewComponentsView].[Shipping] AS [Shipping]
+    FROM [dbo].[NewComponentsView] AS [NewComponentsView]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="QuotationSummaryView" EntityType="Self.QuotationSummaryView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [QuotationSummaryView].[Id] AS [Id], 
+    [QuotationSummaryView].[CoflexId] AS [CoflexId], 
+    [QuotationSummaryView].[ClientId] AS [ClientId], 
+    [QuotationSummaryView].[ClientName] AS [ClientName], 
+    [QuotationSummaryView].[Status] AS [Status], 
+    [QuotationSummaryView].[Vendor] AS [Vendor], 
+    [QuotationSummaryView].[IdVersion] AS [IdVersion], 
+    [QuotationSummaryView].[VersionNumber] AS [VersionNumber], 
+    [QuotationSummaryView].[ExchangeRate] AS [ExchangeRate], 
+    [QuotationSummaryView].[Date] AS [Date], 
+    [QuotationSummaryView].[LastModificationDate] AS [LastModificationDate], 
+    [QuotationSummaryView].[VStatus] AS [VStatus], 
+    [QuotationSummaryView].[Margin] AS [Margin], 
+    [QuotationSummaryView].[QuotationStatusName] AS [QuotationStatusName], 
+    [QuotationSummaryView].[QuotationVersionStatusName] AS [QuotationVersionStatusName]
+    FROM [dbo].[QuotationSummaryView] AS [QuotationSummaryView]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_dbo_Items_dbo_QuotationVersions_QuotationVersionsId" Association="Self.FK_dbo_Items_dbo_QuotationVersions_QuotationVersionsId">
             <End Role="QuotationVersions" EntitySet="QuotationVersions" />
             <End Role="Items" EntitySet="Items" />
@@ -187,6 +307,7 @@ advertencia 6002: La tabla o vista 'CoflexDB.dbo.AspNetUsersView' no tiene defin
           <Property Name="UM" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ItemsComponents" Relationship="Self.FK_dbo_ItemsComponents_dbo_Items_ItemsId" FromRole="Items" ToRole="ItemsComponents" />
+          <Property Name="ProfitMargin" Type="Double" />
         </EntityType>
         <EntityType Name="ItemsComponents">
           <Key>
@@ -204,6 +325,10 @@ advertencia 6002: La tabla o vista 'CoflexDB.dbo.AspNetUsersView' no tiene defin
           <Property Name="Lvl1" Type="Int32" Nullable="false" />
           <Property Name="Lvl2" Type="Int32" Nullable="false" />
           <Property Name="Lvl3" Type="Int32" Nullable="false" />
+          <Property Name="RBCost" Type="Int32" />
+          <Property Name="FinalCost" Type="Double" />
+          <Property Name="RACost" Type="Int32" />
+          <Property Name="Shipping" Type="Double" Nullable="false" />
         </EntityType>
         <EntityType Name="Quotations">
           <Key>
@@ -217,6 +342,7 @@ advertencia 6002: La tabla o vista 'CoflexDB.dbo.AspNetUsersView' no tiene defin
           <Property Name="Status" Type="Int32" Nullable="false" />
           <NavigationProperty Name="QuotationVersions" Relationship="CoflexDBModel.FK_dbo_QuotationVersions_dbo_Quotations_QuotationsId" FromRole="Quotations" ToRole="QuotationVersions" />
           <NavigationProperty Name="AspNetUsersView" Relationship="CoflexDBModel.AspNetUsersViewQuotations" FromRole="Quotations" ToRole="AspNetUsersView" />
+          <Property Name="CoflexId" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_dbo_ItemsComponents_dbo_Items_ItemsId">
           <End Role="Items" Type="Self.Items" Multiplicity="1">
@@ -259,6 +385,9 @@ advertencia 6002: La tabla o vista 'CoflexDB.dbo.AspNetUsersView' no tiene defin
             <End Role="Quotations" EntitySet="Quotations" />
             <End Role="NewComponents" EntitySet="NewComponents" />
           </AssociationSet>
+          <EntitySet Name="NewComponentsView" EntityType="CoflexDBModel.NewComponentsView" />
+          <EntitySet Name="CatUOFMView" EntityType="CoflexDBModel.CatUOFMView" />
+          <EntitySet Name="QuotationSummaryView" EntityType="CoflexDBModel.QuotationSummaryView" />
           </EntityContainer>
         <EntityType Name="QuotationVersions">
           <Key>
@@ -272,6 +401,7 @@ advertencia 6002: La tabla o vista 'CoflexDB.dbo.AspNetUsersView' no tiene defin
           <Property Name="Status" Type="Int32" Nullable="false" />
           <Property Name="UseStndCost" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Items" Relationship="CoflexDBModel.FK_dbo_Items_dbo_QuotationVersions_QuotationVersionsId" FromRole="QuotationVersions" ToRole="Items" />
+          <Property Name="LastModificationDate" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <Association Name="FK_dbo_Items_dbo_QuotationVersions_QuotationVersionsId">
           <End Type="CoflexDBModel.QuotationVersions" Role="QuotationVersions" Multiplicity="1">
@@ -335,6 +465,7 @@ advertencia 6002: La tabla o vista 'CoflexDB.dbo.AspNetUsersView' no tiene defin
           <Property Name="StndCost" Type="Decimal" Nullable="false" Precision="19" Scale="5" />
           <Property Name="CurrntCost" Type="Decimal" Nullable="false" Precision="19" Scale="5" />
           <Property Name="Result" Type="Decimal" Nullable="false" Precision="19" Scale="5" />
+          <Property Name="ItemDesc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_NewComponents_Quotations">
           <End Type="CoflexDBModel.Quotations" Role="Quotations" Multiplicity="1" />
@@ -348,6 +479,64 @@ advertencia 6002: La tabla o vista 'CoflexDB.dbo.AspNetUsersView' no tiene defin
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="NewComponentsView">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Parent" Type="String" MaxLength="31" FixedLength="false" Unicode="false" />
+          <Property Name="SkuArticulo" Type="String" MaxLength="31" FixedLength="false" Unicode="false" />
+          <Property Name="SkuComponente" Type="String" MaxLength="31" FixedLength="false" Unicode="false" />
+          <Property Name="ITEMDESC" Type="String" MaxLength="101" FixedLength="false" Unicode="false" />
+          <Property Name="QUANTITY_I" Type="Decimal" Precision="19" Scale="5" />
+          <Property Name="UOFM" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="StndCost" Type="Decimal" Nullable="false" Precision="19" Scale="5" />
+          <Property Name="CURRCOST" Type="Decimal" Nullable="false" Precision="19" Scale="5" />
+          <Property Name="RESULT" Type="Decimal" Nullable="false" Precision="19" Scale="5" />
+          <Property Name="Nivel1" Type="Int16" />
+          <Property Name="Nivel2" Type="Int32" Nullable="false" />
+          <Property Name="Nivel3" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="RACost" Type="Int32" />
+          <Property Name="RBCost" Type="Int32" />
+          <Property Name="FinalCost" Type="Double" />
+          <Property Name="Shipping" Type="Double" />
+        </EntityType>
+        <EntityType Name="CatUOFMView">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="UOMSCHDL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UMSCHDSC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="QuotationSummaryView">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Status" />
+            <PropertyRef Name="IdVersion" />
+            <PropertyRef Name="VersionNumber" />
+            <PropertyRef Name="ExchangeRate" />
+            <PropertyRef Name="Date" />
+            <PropertyRef Name="LastModificationDate" />
+            <PropertyRef Name="VStatus" />
+            <PropertyRef Name="QuotationStatusName" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="CoflexId" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="ClientId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClientName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="Vendor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IdVersion" Type="Int32" Nullable="false" />
+          <Property Name="VersionNumber" Type="Int32" Nullable="false" />
+          <Property Name="ExchangeRate" Type="Double" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastModificationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="VStatus" Type="Int32" Nullable="false" />
+          <Property Name="Margin" Type="Double" />
+          <Property Name="QuotationStatusName" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="QuotationVersionStatusName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -357,6 +546,7 @@ advertencia 6002: La tabla o vista 'CoflexDB.dbo.AspNetUsersView' no tiene defin
           <EntitySetMapping Name="Items">
             <EntityTypeMapping TypeName="CoflexDBModel.Items">
               <MappingFragment StoreEntitySet="Items">
+                <ScalarProperty Name="ProfitMargin" ColumnName="ProfitMargin" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="QuotationVersionsId" ColumnName="QuotationVersionsId" />
                 <ScalarProperty Name="ItemNumber" ColumnName="ItemNumber" />
@@ -368,9 +558,15 @@ advertencia 6002: La tabla o vista 'CoflexDB.dbo.AspNetUsersView' no tiene defin
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+
+
           <EntitySetMapping Name="ItemsComponents">
             <EntityTypeMapping TypeName="CoflexDBModel.ItemsComponents">
               <MappingFragment StoreEntitySet="ItemsComponents">
+                <ScalarProperty Name="Shipping" ColumnName="Shipping" />
+                <ScalarProperty Name="RACost" ColumnName="RACost" />
+                <ScalarProperty Name="FinalCost" ColumnName="FinalCost" />
+                <ScalarProperty Name="RBCost" ColumnName="RBCost" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="SkuComponent" ColumnName="SkuComponent" />
                 <ScalarProperty Name="ItemDescription" ColumnName="ItemDescription" />
@@ -389,6 +585,7 @@ advertencia 6002: La tabla o vista 'CoflexDB.dbo.AspNetUsersView' no tiene defin
           <EntitySetMapping Name="Quotations">
             <EntityTypeMapping TypeName="IsTypeOf(CoflexDBModel.Quotations)">
               <MappingFragment StoreEntitySet="Quotations">
+                <ScalarProperty Name="CoflexId" ColumnName="CoflexId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
@@ -401,6 +598,7 @@ advertencia 6002: La tabla o vista 'CoflexDB.dbo.AspNetUsersView' no tiene defin
           <EntitySetMapping Name="QuotationVersions">
             <EntityTypeMapping TypeName="CoflexDBModel.QuotationVersions">
               <MappingFragment StoreEntitySet="QuotationVersions">
+                <ScalarProperty Name="LastModificationDate" ColumnName="LastModificationDate" />
                 <ScalarProperty Name="UseStndCost" ColumnName="UseStndCost" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
@@ -426,12 +624,66 @@ advertencia 6002: La tabla o vista 'CoflexDB.dbo.AspNetUsersView' no tiene defin
           <EntitySetMapping Name="NewComponents">
             <EntityTypeMapping TypeName="CoflexDBModel.NewComponents">
               <MappingFragment StoreEntitySet="NewComponents">
+                <ScalarProperty Name="ItemDesc" ColumnName="ItemDesc" />
                 <ScalarProperty Name="Result" ColumnName="Result" />
                 <ScalarProperty Name="CurrntCost" ColumnName="CurrntCost" />
                 <ScalarProperty Name="StndCost" ColumnName="StndCost" />
                 <ScalarProperty Name="Uofm" ColumnName="Uofm" />
                 <ScalarProperty Name="IdQuotation" ColumnName="IdQuotation" />
                 <ScalarProperty Name="SkuComponente" ColumnName="SkuComponente" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NewComponentsView">
+            <EntityTypeMapping TypeName="CoflexDBModel.NewComponentsView">
+              <MappingFragment StoreEntitySet="NewComponentsView">
+                <ScalarProperty Name="Shipping" ColumnName="Shipping" />
+                <ScalarProperty Name="FinalCost" ColumnName="FinalCost" />
+                <ScalarProperty Name="RBCost" ColumnName="RBCost" />
+                <ScalarProperty Name="RACost" ColumnName="RACost" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nivel3" ColumnName="Nivel3" />
+                <ScalarProperty Name="Nivel2" ColumnName="Nivel2" />
+                <ScalarProperty Name="Nivel1" ColumnName="Nivel1" />
+                <ScalarProperty Name="RESULT" ColumnName="RESULT" />
+                <ScalarProperty Name="CURRCOST" ColumnName="CURRCOST" />
+                <ScalarProperty Name="StndCost" ColumnName="StndCost" />
+                <ScalarProperty Name="UOFM" ColumnName="UOFM" />
+                <ScalarProperty Name="QUANTITY_I" ColumnName="QUANTITY_I" />
+                <ScalarProperty Name="ITEMDESC" ColumnName="ITEMDESC" />
+                <ScalarProperty Name="SkuComponente" ColumnName="SkuComponente" />
+                <ScalarProperty Name="SkuArticulo" ColumnName="SkuArticulo" />
+                <ScalarProperty Name="Parent" ColumnName="Parent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CatUOFMView">
+            <EntityTypeMapping TypeName="CoflexDBModel.CatUOFMView">
+              <MappingFragment StoreEntitySet="CatUOFMView">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UMSCHDSC" ColumnName="UMSCHDSC" />
+                <ScalarProperty Name="UOMSCHDL" ColumnName="UOMSCHDL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuotationSummaryView">
+            <EntityTypeMapping TypeName="CoflexDBModel.QuotationSummaryView">
+              <MappingFragment StoreEntitySet="QuotationSummaryView">
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="QuotationVersionStatusName" ColumnName="QuotationVersionStatusName" />
+                <ScalarProperty Name="QuotationStatusName" ColumnName="QuotationStatusName" />
+                <ScalarProperty Name="Margin" ColumnName="Margin" />
+                <ScalarProperty Name="VStatus" ColumnName="VStatus" />
+                <ScalarProperty Name="LastModificationDate" ColumnName="LastModificationDate" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ExchangeRate" ColumnName="ExchangeRate" />
+                <ScalarProperty Name="VersionNumber" ColumnName="VersionNumber" />
+                <ScalarProperty Name="IdVersion" ColumnName="IdVersion" />
+                <ScalarProperty Name="Vendor" ColumnName="Vendor" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="CoflexId" ColumnName="CoflexId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

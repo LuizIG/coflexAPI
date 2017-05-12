@@ -63,6 +63,10 @@ Public Class RegisterBindingModel
     <Display(Name:="Roles")>
     Public Property Roles As ICollection(Of RoleAddBindingModel)
 
+    <Display(Name:="Lider")>
+    Public Property Leader As String
+
+
 End Class
 
 

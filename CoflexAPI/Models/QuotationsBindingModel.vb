@@ -38,7 +38,7 @@ Public Class QuotationsBindingModel
     Public Class QuotationVersionIdBindingModel
         Inherits QuotationVersionBindingModel
         <Required>
-        <Display(Name:="Tipo de Cambio")>
+        <Display(Name:="Id Cotizacion")>
         Public Property IdQuotaions As Integer
     End Class
 
@@ -60,6 +60,11 @@ Public Class QuotationsBindingModel
         <Required>
         <Display(Name:="UM")>
         Public Property UM As String
+
+
+        <Required>
+        <Display(Name:="Margen")>
+        Public Property ProfitMargin As String
 
         <Required>
         <Display(Name:="Status")>
@@ -112,6 +117,18 @@ Public Class QuotationsBindingModel
         <Required>
         <Display(Name:="Lvl3")>
         Public Property Lvl3 As Integer
+
+        <Display(Name:="RBCost")>
+        Public Property RBCost As Integer
+
+        <Display(Name:="RACost")>
+        Public Property RACost As Integer
+
+        <Display(Name:="Costo Final")>
+        Public Property FinalCost As Double
+
+        <Display(Name:="Shipping")>
+        Public Property Shipping As Double
 
     End Class
 
