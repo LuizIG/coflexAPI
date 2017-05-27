@@ -22,29 +22,7 @@ Namespace Controllers
         ' GET: api/Quotations
         <Authorize>
         Function GetQuotations() As IQueryable(Of Quotations)
-
-            Dim idUser = HttpContext.Current.User.Identity.GetUserId
-
-            Dim userscontext As New ApplicationDbContext()
-            Dim userStore = New UserStore(Of ApplicationUser)(userscontext)
-            Dim userManager = New UserManager(Of ApplicationUser)(userStore)
-
-            If (userManager.IsInRole(idUser, "Administrador")) Then 'Trae todas las cotizaciones
-                Return db.Quotations.OrderBy(Function(x) x.Status).ThenByDescending(Function(x) x.Date)
-            ElseIf (userManager.IsInRole(idUser, "Gerente Ventas")) Then 'Trae las cotizaciones de los vendedores
-                Dim misVendedores = userscontext.Users.Where(Function(x) x.Leader = idUser)
-                Dim Vendedores As New List(Of String)
-                Dim cotizacions = db.Quotations.Where(Function(x) x.AspNetUsersId = idUser)
-                For Each vendedor In misVendedores
-                    cotizacions.Union(db.Quotations.Where(Function(x) x.AspNetUsersId = vendedor.Id))
-                Next
-                Return cotizacions.OrderBy(Function(x) x.Status).ThenByDescending(Function(x) x.Date)
-
-            ElseIf ((userManager.IsInRole(idUser, "Vendedor"))) Then 'Trae solo las cotizaciones del vendedor
-                Return db.Quotations.Where(Function(x) x.AspNetUsersId = idUser).OrderBy(Function(x) x.Status).ThenByDescending(Function(x) x.Date)
-            Else
-                Return StatusCode(HttpStatusCode.NoContent)
-            End If
+            Return db.Quotations.OrderBy(Function(x) x.Status).ThenByDescending(Function(x) x.Date)
         End Function
 
         ' GET: api/Quotations/5
@@ -210,7 +188,8 @@ Namespace Controllers
                 .Status = 0,
                 .AspNetUsersId = idUser,
                 .QuotationVersions = quotationVersion,
-                .CoflexId = CoflexId
+                .CoflexId = CoflexId,
+                .ProspectId = model.ProspectId
             }
             db.Quotations.Add(q)
             Await db.SaveChangesAsync()

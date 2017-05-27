@@ -10,6 +10,8 @@
 Imports System
 Imports System.Data.Entity
 Imports System.Data.Entity.Infrastructure
+Imports System.Data.Entity.Core.Objects
+Imports System.Linq
 
 Partial Public Class CoflexDBEntities1
     Inherits DbContext
@@ -31,5 +33,23 @@ Partial Public Class CoflexDBEntities1
     Public Overridable Property NewComponentsView() As DbSet(Of NewComponentsView)
     Public Overridable Property CatUOFMView() As DbSet(Of CatUOFMView)
     Public Overridable Property QuotationSummaryView() As DbSet(Of QuotationSummaryView)
+    Public Overridable Property Prospect() As DbSet(Of Prospect)
+    Public Overridable Property QuoteComments() As DbSet(Of QuoteComments)
+
+    Public Overridable Function Indicator(mindate As Nullable(Of Date), maxdate As Nullable(Of Date), estatus As String, estatusV As String, vendedor As String, cliente As String) As ObjectResult(Of Indicator_Result)
+        Dim mindateParameter As ObjectParameter = If(mindate.HasValue, New ObjectParameter("mindate", mindate), New ObjectParameter("mindate", GetType(Date)))
+
+        Dim maxdateParameter As ObjectParameter = If(maxdate.HasValue, New ObjectParameter("maxdate", maxdate), New ObjectParameter("maxdate", GetType(Date)))
+
+        Dim estatusParameter As ObjectParameter = If(estatus IsNot Nothing, New ObjectParameter("estatus", estatus), New ObjectParameter("estatus", GetType(String)))
+
+        Dim estatusVParameter As ObjectParameter = If(estatusV IsNot Nothing, New ObjectParameter("estatusV", estatusV), New ObjectParameter("estatusV", GetType(String)))
+
+        Dim vendedorParameter As ObjectParameter = If(vendedor IsNot Nothing, New ObjectParameter("vendedor", vendedor), New ObjectParameter("vendedor", GetType(String)))
+
+        Dim clienteParameter As ObjectParameter = If(cliente IsNot Nothing, New ObjectParameter("cliente", cliente), New ObjectParameter("cliente", GetType(String)))
+
+        Return DirectCast(Me, IObjectContextAdapter).ObjectContext.ExecuteFunction(Of Indicator_Result)("Indicator", mindateParameter, maxdateParameter, estatusParameter, estatusVParameter, vendedorParameter, clienteParameter)
+    End Function
 
 End Class

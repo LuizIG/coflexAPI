@@ -82,7 +82,7 @@ Public Class AccountController
 
     ' POST api/Account/SetPassword
     ''' <summary>
-    ''' Establece el password
+    ''' Servicio para el administrador para establecer la contraseña a un usuario en caso de olvido
     ''' </summary>
     ''' <param name="model"></param>
     ''' <returns></returns>
@@ -222,7 +222,7 @@ Public Class AccountController
     <Route("UsersByLeader")>
     Public Async Function GetUsersListByLeader() As Task(Of List(Of ApplicationUser))
         Dim idLeader = HttpContext.Current.User.Identity.GetUserId
-        Dim usersList = UserManager.Users.Where(Function(x) x.Leader = idLeader).ToList
+        Dim usersList = UserManager.Users.ToList
 
         For Each usuario In usersList
             usuario.Name = usuario.Name & " " & usuario.PaternalSurname & " " & usuario.MaternalSurname
@@ -268,9 +268,11 @@ Public Class AccountController
 
     ' GET api/Account/Leaders
     ''' <summary>
-    ''' Obtiene una lista de todos los usuarios activos
+    ''' Obtiene una lista de todos los gerentes de ventas activos
     ''' </summary>
     ''' <returns></returns>
+    <Authorize(Roles:="Administrador")>
+    <HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)>
     <HttpGet>
     <Route("Leaders")>
     Public Async Function GetLeadersList() As Task(Of List(Of UserViewModelWithRole))

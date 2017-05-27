@@ -11,6 +11,9 @@ Public Class QuotationsBindingModel
         <Display(Name:="Nombre del Cliente")>
         Public Property ClientName As String
 
+        <Display(Name:="Id del Prospecto")>
+        Public Property ProspectId As Integer
+
         <Required>
         <Display(Name:="Version")>
         Public Property QuotationVersions As QuotationVersionBindingModel

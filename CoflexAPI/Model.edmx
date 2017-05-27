@@ -53,6 +53,16 @@
           <Property Name="Result" Type="numeric" Precision="19" Scale="5" Nullable="false" />
           <Property Name="ItemDesc" Type="nvarchar" MaxLength="100" />
         </EntityType>
+        <EntityType Name="Prospect">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyName" Type="varchar" MaxLength="250" />
+          <Property Name="Address" Type="varchar" MaxLength="500" />
+          <Property Name="ContactName" Type="varchar" MaxLength="250" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="20" />
+        </EntityType>
         <EntityType Name="Quotations">
           <Key>
             <PropertyRef Name="Id" />
@@ -64,6 +74,7 @@
           <Property Name="ClientName" Type="nvarchar(max)" />
           <Property Name="Date" Type="datetime" Nullable="false" />
           <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="ProspectId" Type="int" />
         </EntityType>
         <EntityType Name="QuotationVersions">
           <Key>
@@ -77,6 +88,18 @@
           <Property Name="LastModificationDate" Type="datetime" Nullable="false" />
           <Property Name="Status" Type="int" Nullable="false" />
           <Property Name="UseStndCost" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QuoteComments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QuotationsVersionsId" Type="int" Nullable="false" />
+          <Property Name="Atention" Type="varchar" MaxLength="200" />
+          <Property Name="Configuration" Type="nvarchar(max)" />
+          <Property Name="OrderDeliery" Type="varchar" MaxLength="200" />
+          <Property Name="DeliveryTerms" Type="varchar" MaxLength="200" />
+          <Property Name="ValidOffer" Type="varchar" MaxLength="200" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'CoflexDB2.dbo.AspNetUsersView' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -135,10 +158,10 @@ advertencia 6002: La tabla o vista 'CoflexDB2.dbo.QuotationSummaryView' no tiene
             <PropertyRef Name="IdVersion" />
             <PropertyRef Name="VersionNumber" />
             <PropertyRef Name="ExchangeRate" />
-            <PropertyRef Name="Date" />
             <PropertyRef Name="LastModificationDate" />
             <PropertyRef Name="VStatus" />
             <PropertyRef Name="QuotationStatusName" />
+            <PropertyRef Name="Date" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="CoflexId" Type="nvarchar" MaxLength="8" />
@@ -149,7 +172,7 @@ advertencia 6002: La tabla o vista 'CoflexDB2.dbo.QuotationSummaryView' no tiene
           <Property Name="IdVersion" Type="int" Nullable="false" />
           <Property Name="VersionNumber" Type="int" Nullable="false" />
           <Property Name="ExchangeRate" Type="float" Nullable="false" />
-          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
           <Property Name="LastModificationDate" Type="datetime" Nullable="false" />
           <Property Name="VStatus" Type="int" Nullable="false" />
           <Property Name="Margin" Type="float" />
@@ -210,12 +233,46 @@ advertencia 6002: La tabla o vista 'CoflexDB2.dbo.QuotationSummaryView' no tiene
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Quotations_Prospect">
+          <End Role="Prospect" Type="Self.Prospect" Multiplicity="0..1" />
+          <End Role="Quotations" Type="Self.Quotations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Prospect">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Quotations">
+              <PropertyRef Name="ProspectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuoteComments_QuotationVersions">
+          <End Role="QuotationVersions" Type="Self.QuotationVersions" Multiplicity="1" />
+          <End Role="QuoteComments" Type="Self.QuoteComments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuotationVersions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="QuoteComments">
+              <PropertyRef Name="QuotationsVersionsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="QuotationsIndicatorProcedure" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="mindate" Type="datetime" Mode="In" />
+          <Parameter Name="maxdate" Type="datetime" Mode="In" />
+          <Parameter Name="estatus" Type="varchar" Mode="In" />
+          <Parameter Name="estatusV" Type="varchar" Mode="In" />
+          <Parameter Name="vendedor" Type="varchar" Mode="In" />
+          <Parameter Name="cliente" Type="varchar" Mode="In" />
+        </Function>
         <EntityContainer Name="CoflexDBModelStoreContainer">
           <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemsComponents" EntityType="Self.ItemsComponents" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NewComponents" EntityType="Self.NewComponents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Prospect" EntityType="Self.Prospect" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Quotations" EntityType="Self.Quotations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QuotationVersions" EntityType="Self.QuotationVersions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QuoteComments" EntityType="Self.QuoteComments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsersView" EntityType="Self.AspNetUsersView" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [AspNetUsersView].[Id] AS [Id], 
@@ -289,6 +346,14 @@ advertencia 6002: La tabla o vista 'CoflexDB2.dbo.QuotationSummaryView' no tiene
             <End Role="Quotations" EntitySet="Quotations" />
             <End Role="NewComponents" EntitySet="NewComponents" />
           </AssociationSet>
+          <AssociationSet Name="FK_Quotations_Prospect" Association="Self.FK_Quotations_Prospect">
+            <End Role="Prospect" EntitySet="Prospect" />
+            <End Role="Quotations" EntitySet="Quotations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuoteComments_QuotationVersions" Association="Self.FK_QuoteComments_QuotationVersions">
+            <End Role="QuotationVersions" EntitySet="QuotationVersions" />
+            <End Role="QuoteComments" EntitySet="QuoteComments" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -343,6 +408,7 @@ advertencia 6002: La tabla o vista 'CoflexDB2.dbo.QuotationSummaryView' no tiene
           <NavigationProperty Name="QuotationVersions" Relationship="CoflexDBModel.FK_dbo_QuotationVersions_dbo_Quotations_QuotationsId" FromRole="Quotations" ToRole="QuotationVersions" />
           <NavigationProperty Name="AspNetUsersView" Relationship="CoflexDBModel.AspNetUsersViewQuotations" FromRole="Quotations" ToRole="AspNetUsersView" />
           <Property Name="CoflexId" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="ProspectId" Type="Int32" />
         </EntityType>
         <Association Name="FK_dbo_ItemsComponents_dbo_Items_ItemsId">
           <End Role="Items" Type="Self.Items" Multiplicity="1">
@@ -388,6 +454,24 @@ advertencia 6002: La tabla o vista 'CoflexDB2.dbo.QuotationSummaryView' no tiene
           <EntitySet Name="NewComponentsView" EntityType="CoflexDBModel.NewComponentsView" />
           <EntitySet Name="CatUOFMView" EntityType="CoflexDBModel.CatUOFMView" />
           <EntitySet Name="QuotationSummaryView" EntityType="CoflexDBModel.QuotationSummaryView" />
+          <EntitySet Name="Prospect" EntityType="CoflexDBModel.Prospect" />
+          <AssociationSet Name="FK_Quotations_Prospect" Association="CoflexDBModel.FK_Quotations_Prospect">
+            <End Role="Prospect" EntitySet="Prospect" />
+            <End Role="Quotations" EntitySet="Quotations" />
+          </AssociationSet>
+          <FunctionImport Name="Indicator" ReturnType="Collection(CoflexDBModel.Indicator_Result)">
+            <Parameter Name="mindate" Mode="In" Type="DateTime" />
+            <Parameter Name="maxdate" Mode="In" Type="DateTime" />
+            <Parameter Name="estatus" Mode="In" Type="String" />
+            <Parameter Name="estatusV" Mode="In" Type="String" />
+            <Parameter Name="vendedor" Mode="In" Type="String" />
+            <Parameter Name="cliente" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="QuoteComments" EntityType="CoflexDBModel.QuoteComments" />
+          <AssociationSet Name="FK_QuoteComments_QuotationVersions" Association="CoflexDBModel.FK_QuoteComments_QuotationVersions">
+            <End Role="QuotationVersions" EntitySet="QuotationVersions" />
+            <End Role="QuoteComments" EntitySet="QuoteComments" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="QuotationVersions">
           <Key>
@@ -530,13 +614,79 @@ advertencia 6002: La tabla o vista 'CoflexDB2.dbo.QuotationSummaryView' no tiene
           <Property Name="IdVersion" Type="Int32" Nullable="false" />
           <Property Name="VersionNumber" Type="Int32" Nullable="false" />
           <Property Name="ExchangeRate" Type="Double" Nullable="false" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="LastModificationDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="VStatus" Type="Int32" Nullable="false" />
           <Property Name="Margin" Type="Double" />
           <Property Name="QuotationStatusName" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
           <Property Name="QuotationVersionStatusName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="Prospect">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ContactName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_Quotations_Prospect">
+          <End Type="CoflexDBModel.Prospect" Role="Prospect" Multiplicity="0..1" />
+          <End Type="CoflexDBModel.Quotations" Role="Quotations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Prospect">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Quotations">
+              <PropertyRef Name="ProspectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="Indicator_Result">
+          <Property Type="Int32" Name="NCotizaciones" Nullable="true" />
+          <Property Type="Double" Name="MontoPromedioPesos" Nullable="true" />
+          <Property Type="Double" Name="MontoPromedioDollar" Nullable="true" />
+          <Property Type="Double" Name="MPENC" Nullable="true" />
+          <Property Type="Double" Name="MDENC" Nullable="true" />
+          <Property Type="Double" Name="MontoTotalCostos" Nullable="true" />
+          <Property Type="Double" Name="MargenPesos" Nullable="true" />
+          <Property Type="Double" Name="MargenDollar" Nullable="true" />
+          <Property Type="Int32" Name="NCMPM40" Nullable="true" />
+          <Property Type="Int32" Name="NCMPM3040" Nullable="true" />
+          <Property Type="Int32" Name="NCMPM2030" Nullable="true" />
+          <Property Type="Int32" Name="NCMPM20" Nullable="true" />
+          <Property Type="Double" Name="PMSum" Nullable="true" />
+          <Property Type="DateTime" Name="MinDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="MaxDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Mes" Nullable="false" />
+          <Property Type="String" Name="Anio" Nullable="false" />
+          <Property Type="String" Name="MesLetra" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="QuoteComments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuotationsVersionsId" Type="Int32" Nullable="false" />
+          <Property Name="Atention" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Configuration" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OrderDeliery" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DeliveryTerms" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ValidOffer" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_QuoteComments_QuotationVersions">
+          <End Type="CoflexDBModel.QuotationVersions" Role="QuotationVersions" Multiplicity="1" />
+          <End Type="CoflexDBModel.QuoteComments" Role="QuoteComments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuotationVersions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="QuoteComments">
+              <PropertyRef Name="QuotationsVersionsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -585,6 +735,7 @@ advertencia 6002: La tabla o vista 'CoflexDB2.dbo.QuotationSummaryView' no tiene
           <EntitySetMapping Name="Quotations">
             <EntityTypeMapping TypeName="IsTypeOf(CoflexDBModel.Quotations)">
               <MappingFragment StoreEntitySet="Quotations">
+                <ScalarProperty Name="ProspectId" ColumnName="ProspectId" />
                 <ScalarProperty Name="CoflexId" ColumnName="CoflexId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
@@ -684,6 +835,54 @@ advertencia 6002: La tabla o vista 'CoflexDB2.dbo.QuotationSummaryView' no tiene
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="ClientName" ColumnName="ClientName" />
                 <ScalarProperty Name="CoflexId" ColumnName="CoflexId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Prospect">
+            <EntityTypeMapping TypeName="CoflexDBModel.Prospect">
+              <MappingFragment StoreEntitySet="Prospect">
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Indicator" FunctionName="CoflexDBModel.Store.QuotationsIndicatorProcedure">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CoflexDBModel.Indicator_Result">
+                <ScalarProperty Name="NCotizaciones" ColumnName="NCotizaciones" />
+                <ScalarProperty Name="MontoPromedioPesos" ColumnName="MontoPromedioPesos" />
+                <ScalarProperty Name="MontoPromedioDollar" ColumnName="MontoPromedioDollar" />
+                <ScalarProperty Name="MPENC" ColumnName="MPENC" />
+                <ScalarProperty Name="MDENC" ColumnName="MDENC" />
+                <ScalarProperty Name="MontoTotalCostos" ColumnName="MontoTotalCostos" />
+                <ScalarProperty Name="MargenPesos" ColumnName="MargenPesos" />
+                <ScalarProperty Name="MargenDollar" ColumnName="MargenDollar" />
+                <ScalarProperty Name="NCMPM40" ColumnName="NCMPM40" />
+                <ScalarProperty Name="NCMPM3040" ColumnName="NCMPM3040" />
+                <ScalarProperty Name="NCMPM2030" ColumnName="NCMPM2030" />
+                <ScalarProperty Name="NCMPM20" ColumnName="NCMPM20" />
+                <ScalarProperty Name="PMSum" ColumnName="PMSum" />
+                <ScalarProperty Name="MinDate" ColumnName="MinDate" />
+                <ScalarProperty Name="MaxDate" ColumnName="MaxDate" />
+                <ScalarProperty Name="Mes" ColumnName="Mes" />
+                <ScalarProperty Name="Anio" ColumnName="Anio" />
+                <ScalarProperty Name="MesLetra" ColumnName="MesLetra" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="QuoteComments">
+            <EntityTypeMapping TypeName="CoflexDBModel.QuoteComments">
+              <MappingFragment StoreEntitySet="QuoteComments">
+                <ScalarProperty Name="ValidOffer" ColumnName="ValidOffer" />
+                <ScalarProperty Name="DeliveryTerms" ColumnName="DeliveryTerms" />
+                <ScalarProperty Name="OrderDeliery" ColumnName="OrderDeliery" />
+                <ScalarProperty Name="Configuration" ColumnName="Configuration" />
+                <ScalarProperty Name="Atention" ColumnName="Atention" />
+                <ScalarProperty Name="QuotationsVersionsId" ColumnName="QuotationsVersionsId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

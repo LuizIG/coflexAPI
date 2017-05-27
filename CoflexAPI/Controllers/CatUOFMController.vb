@@ -10,12 +10,18 @@ Imports System.Web.Http.Description
 Imports CoflexAPI
 
 Namespace Controllers
+    <Authorize>
     Public Class CatUOFMController
         Inherits System.Web.Http.ApiController
 
         Private db As New CoflexDBEntities1
 
         ' GET: api/CatUOFM
+
+        ''' <summary>
+        ''' Catalogo de unidades de medida
+        ''' </summary>
+        ''' <returns></returns>
         Function GetCatUOFMView() As IQueryable(Of CatUOFMView)
             Return db.CatUOFMView
         End Function

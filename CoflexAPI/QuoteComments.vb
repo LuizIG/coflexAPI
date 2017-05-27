@@ -10,17 +10,13 @@
 Imports System
 Imports System.Collections.Generic
 
-Partial Public Class Quotations
+Partial Public Class QuoteComments
     Public Property Id As Integer
-    Public Property AspNetUsersId As String
-    Public Property ClientId As String
-    Public Property ClientName As String
-    Public Property [Date] As Date
-    Public Property Status As Integer
-    Public Property CoflexId As String
-    Public Property ProspectId As Nullable(Of Integer)
-
-    Public Overridable Property QuotationVersions As ICollection(Of QuotationVersions) = New HashSet(Of QuotationVersions)
-    Public Overridable Property AspNetUsersView As AspNetUsersView
+    Public Property QuotationsVersionsId As Integer
+    Public Property Atention As String
+    Public Property Configuration As String
+    Public Property OrderDeliery As String
+    Public Property DeliveryTerms As String
+    Public Property ValidOffer As String
 
 End Class

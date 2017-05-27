@@ -272,17 +272,22 @@
     </Compile>
     <Compile Include="Controllers\AccountController.vb" />
     <Compile Include="Controllers\CatUOFMController.vb" />
+    <Compile Include="Controllers\CommentsController.vb" />
     <Compile Include="Controllers\HomeController.vb" />
+    <Compile Include="Controllers\IndicatorController.vb" />
     <Compile Include="Controllers\ItemsComponentsController.vb" />
     <Compile Include="Controllers\ItemsController.vb" />
     <Compile Include="Controllers\NewComponentsController.vb" />
+    <Compile Include="Controllers\ProspectsController.vb" />
     <Compile Include="Controllers\QuotationsController.vb" />
     <Compile Include="Controllers\QuotationSummaryController.vb" />
     <Compile Include="Controllers\QuotationVersionsController.vb" />
     <Compile Include="Controllers\RolesController.vb" />
-    <Compile Include="Controllers\StatusController.vb" />
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Indicator_Result.vb">
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Items.vb">
       <DependentUpon>Model.tt</DependentUpon>
@@ -334,6 +339,10 @@
       <DependentUpon>201705050839073_shipping.vb</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201705050839073_shipping.vb" />
+    <Compile Include="Migrations\201705120254061_Prospect.Designer.vb">
+      <DependentUpon>201705120254061_Prospect.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705120254061_Prospect.vb" />
     <Compile Include="Migrations\Configuration.vb" />
     <Compile Include="Model.Context.vb">
       <AutoGen>True</AutoGen>
@@ -377,6 +386,9 @@
     <Compile Include="NewComponentsView.vb">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Prospect.vb">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Providers\ApplicationOAuthProvider.vb" />
     <Compile Include="Quotations.vb">
       <DependentUpon>Model.tt</DependentUpon>
@@ -385,6 +397,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="QuotationVersions.vb">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QuoteComments.vb">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Results\ChallengeResult.vb" />
@@ -423,6 +438,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705050839073_shipping.resx">
       <DependentUpon>201705050839073_shipping.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705120254061_Prospect.resx">
+      <DependentUpon>201705120254061_Prospect.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
