@@ -37,67 +37,6 @@ Namespace Controllers
             Return Ok(catUOFMView)
         End Function
 
-        ' PUT: api/CatUOFM/5
-        <ResponseType(GetType(Void))>
-        Async Function PutCatUOFMView(ByVal id As String, ByVal catUOFMView As CatUOFMView) As Task(Of IHttpActionResult)
-            If Not ModelState.IsValid Then
-                Return BadRequest(ModelState)
-            End If
-
-            If Not id = catUOFMView.Id Then
-                Return BadRequest()
-            End If
-
-            db.Entry(catUOFMView).State = EntityState.Modified
-
-            Try
-                Await db.SaveChangesAsync()
-            Catch ex As DbUpdateConcurrencyException
-                If Not (CatUOFMViewExists(id)) Then
-                    Return NotFound()
-                Else
-                    Throw
-                End If
-            End Try
-
-            Return StatusCode(HttpStatusCode.NoContent)
-        End Function
-
-        ' POST: api/CatUOFM
-        <ResponseType(GetType(CatUOFMView))>
-        Async Function PostCatUOFMView(ByVal catUOFMView As CatUOFMView) As Task(Of IHttpActionResult)
-            If Not ModelState.IsValid Then
-                Return BadRequest(ModelState)
-            End If
-
-            db.CatUOFMView.Add(catUOFMView)
-
-            Try
-                Await db.SaveChangesAsync()
-            Catch ex As DbUpdateException
-                If (CatUOFMViewExists(catUOFMView.Id)) Then
-                    Return Conflict()
-                Else
-                    Throw
-                End If
-            End Try
-
-            Return CreatedAtRoute("DefaultApi", New With {.id = catUOFMView.Id}, catUOFMView)
-        End Function
-
-        ' DELETE: api/CatUOFM/5
-        <ResponseType(GetType(CatUOFMView))>
-        Async Function DeleteCatUOFMView(ByVal id As String) As Task(Of IHttpActionResult)
-            Dim catUOFMView As CatUOFMView = Await db.CatUOFMView.FindAsync(id)
-            If IsNothing(catUOFMView) Then
-                Return NotFound()
-            End If
-
-            db.CatUOFMView.Remove(catUOFMView)
-            Await db.SaveChangesAsync()
-
-            Return Ok(catUOFMView)
-        End Function
 
         Protected Overrides Sub Dispose(ByVal disposing As Boolean)
             If (disposing) Then
