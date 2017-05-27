@@ -8,6 +8,7 @@ Imports System.Threading.Tasks
 Imports System.Web.Http
 Imports System.Web.Http.Description
 Imports CoflexAPI
+Imports Microsoft.AspNet.Identity
 
 Namespace Controllers
     <Authorize>
@@ -22,11 +23,13 @@ Namespace Controllers
         ''' Catalogo de unidades de medida
         ''' </summary>
         ''' <returns></returns>
+        <HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)>
         Function GetCatUOFMView() As IQueryable(Of CatUOFMView)
             Return db.CatUOFMView
         End Function
 
         ' GET: api/CatUOFM/5
+        <HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)>
         <ResponseType(GetType(CatUOFMView))>
         Async Function GetCatUOFMView(ByVal id As String) As Task(Of IHttpActionResult)
             Dim catUOFMView As CatUOFMView = Await db.CatUOFMView.FindAsync(id)
