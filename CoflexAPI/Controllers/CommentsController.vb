@@ -8,19 +8,34 @@ Imports System.Threading.Tasks
 Imports System.Web.Http
 Imports System.Web.Http.Description
 Imports CoflexAPI
+Imports Microsoft.AspNet.Identity
 
 Namespace Controllers
+    <Authorize>
     Public Class CommentsController
         Inherits System.Web.Http.ApiController
 
         Private db As New CoflexDBEntities1
 
         ' GET: api/Comments
+        ''' <summary>
+        ''' Obtiene una lista de todos los comentarios de las cotizaciones
+        ''' </summary>
+        ''' <returns></returns>
+        <HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)>
         Function GetQuoteComments() As IQueryable(Of QuoteComments)
             Return db.QuoteComments
         End Function
 
         ' GET: api/Comments/5
+
+        ''' <summary>
+        ''' Obtiene los comentarios por version de cotizacion
+        ''' </summary>
+        ''' <param name="id">Id de la version de la cotizacion</param>
+        ''' <returns></returns>
+
+        <HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)>
         <ResponseType(GetType(QuoteComments))>
         Async Function GetQuoteComments(ByVal id As Integer) As Task(Of IHttpActionResult)
             Dim quoteComments = Await db.QuoteComments.Where(Function(x) x.QuotationsVersionsId = id).ToArrayAsync
@@ -37,6 +52,13 @@ Namespace Controllers
         End Function
 
         ' PUT: api/Comments/5
+        ''' <summary>
+        ''' Inserta o actualiza los comentarios de la cotizacion
+        ''' </summary>
+        ''' <param name="id">Id de la version de la cotizacion</param>
+        ''' <param name="quoteComments">Comentarios</param>
+        ''' <returns></returns>
+        <HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)>
         <ResponseType(GetType(Void))>
         Async Function PutQuoteComments(ByVal id As Integer, ByVal quoteComments As QuoteComments) As Task(Of IHttpActionResult)
             If Not ModelState.IsValid Then
