@@ -8,20 +8,33 @@ Imports System.Threading.Tasks
 Imports System.Web.Http
 Imports System.Web.Http.Description
 Imports CoflexAPI
+Imports Microsoft.AspNet.Identity
 
 Namespace Controllers
+    <Authorize>
     Public Class NewComponentsController
         Inherits System.Web.Http.ApiController
 
         Private db As New CoflexDBEntities1
 
         ' GET: api/NewComponents
+        ''' <summary>
+        ''' Obiene la lista de los componentes custom creados por usuarios
+        ''' </summary>
+        ''' <returns></returns>
+        <HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)>
         Function GetNewComponents() As IQueryable(Of NewComponentsView)
             Return db.NewComponentsView
         End Function
 
         ' GET: api/NewComponents/5
+        ''' <summary>
+        ''' Obtiene el detalle de componentes custom
+        ''' </summary>
+        ''' <param name="id">Id del componente</param>
+        ''' <returns></returns>
         <ResponseType(GetType(NewComponentsView))>
+        <HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)>
         Async Function GetNewComponents(ByVal id As Integer) As Task(Of IHttpActionResult)
             Dim newComponents As NewComponentsView = Await db.NewComponentsView.FindAsync(id)
             If IsNothing(newComponents) Then
@@ -32,7 +45,13 @@ Namespace Controllers
         End Function
 
         ' POST: api/NewComponents
+        ''' <summary>
+        ''' Alta de componentes custom
+        ''' </summary>
+        ''' <param name="newComponentModel">Modelo de componentes</param>
+        ''' <returns></returns>
         <ResponseType(GetType(NewComponents))>
+        <HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)>
         Async Function PostNewComponents(ByVal newComponentModel As NewComponentsBindingModel) As Task(Of IHttpActionResult)
             If Not ModelState.IsValid Then
                 Return BadRequest(ModelState)

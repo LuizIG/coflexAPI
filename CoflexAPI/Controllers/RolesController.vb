@@ -17,7 +17,7 @@ Namespace Controllers
         ''' </summary>
         ''' <param name="model"></param>
         ''' <returns></returns>
-        <AllowAnonymous>
+        <HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)>
         <HttpPost>
         Public Async Function AddRole(model As RoleAddBindingModel) As Task(Of IHttpActionResult)
             If Not ModelState.IsValid Then
@@ -38,7 +38,7 @@ Namespace Controllers
         ''' Obtiene una lista de los roles
         ''' </summary>
         ''' <returns></returns>
-        <AllowAnonymous>
+        <HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)>
         <HttpGet>
         <ResponseType(GetType(List(Of RoleViewModel)))>
         Public Function getRoles() As List(Of RoleViewModel)
@@ -62,7 +62,7 @@ Namespace Controllers
         ''' </summary>
         ''' <param name="id">Id del rol</param>
         ''' <returns></returns>
-        <AllowAnonymous>
+        <HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)>
         <HttpGet>
         <ResponseType(GetType(RoleViewModel))>
         Public Async Function getRole(ByVal id As String) As Task(Of IHttpActionResult)

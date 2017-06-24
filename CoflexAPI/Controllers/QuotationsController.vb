@@ -14,19 +14,29 @@ Imports Microsoft.AspNet.Identity.EntityFramework
 Imports Microsoft.Owin.Security
 
 Namespace Controllers
+    <Authorize>
     Public Class QuotationsController
         Inherits System.Web.Http.ApiController
 
         Private db As New CoflexDBEntities1
 
         ' GET: api/Quotations
-        <Authorize>
+        ''' <summary>
+        ''' Obtiene el listado de cotizaciones ordenados por estatus y por fecha
+        ''' </summary>
+        ''' <returns></returns>
+        <HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)>
         Function GetQuotations() As IQueryable(Of Quotations)
             Return db.Quotations.OrderBy(Function(x) x.Status).ThenByDescending(Function(x) x.Date)
         End Function
 
         ' GET: api/Quotations/5
-        <Authorize>
+        ''' <summary>
+        ''' Obtiene el detalle de una cotizacion por Id
+        ''' </summary>
+        ''' <param name="id">Id de cotizacion</param>
+        ''' <returns></returns>
+        <HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)>
         <ResponseType(GetType(Quotations))>
         Async Function GetQuotations(ByVal id As Integer) As Task(Of IHttpActionResult)
             db.Configuration.LazyLoadingEnabled = False
@@ -39,7 +49,14 @@ Namespace Controllers
         End Function
 
         ' PUT: api/Quotations/5
-        <Authorize>
+
+        ''' <summary>
+        ''' Actualiza la informacion de la cotizacion por id
+        ''' </summary>
+        ''' <param name="id">Id de cotizacion</param>
+        ''' <param name="quotations">Modelo de cotizacion</param>
+        ''' <returns></returns>
+        <HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)>
         <ResponseType(GetType(Void))>
         Async Function PutQuotations(ByVal id As Integer, ByVal quotations As Quotations) As Task(Of IHttpActionResult)
             If Not ModelState.IsValid Then
@@ -66,7 +83,13 @@ Namespace Controllers
         End Function
 
         ' PUT: api/Quotations/5
-        <Authorize>
+        ''' <summary>
+        ''' Actualiza el vendedor a una cotizacion
+        ''' </summary>
+        ''' <param name="id">Id cotizacion</param>
+        ''' <param name="UserId">Id del vendedor</param>
+        ''' <returns></returns>
+        <HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)>
         <ResponseType(GetType(Void))>
         Async Function PutQuotations(ByVal id As Integer, ByVal UserId As String) As Task(Of IHttpActionResult)
             If Not ModelState.IsValid Then
@@ -92,7 +115,12 @@ Namespace Controllers
         End Function
 
         ' POST: api/Quotations
-        <Authorize>
+        ''' <summary>
+        ''' Alta de cotizacion y version. Se utiliza para dar de alta una nueva cotizacion con su version inicial.
+        ''' </summary>
+        ''' <param name="model">Modelo de la cotizacion</param>
+        ''' <returns></returns>
+        <HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)>
         <ResponseType(GetType(Quotations))>
         Async Function PostQuotations(ByVal model As QuotationBindingModel) As Task(Of IHttpActionResult)
             If Not ModelState.IsValid Then
@@ -143,7 +171,8 @@ Namespace Controllers
                         .FinalCost = itemComponent.FinalCost,
                         .RACost = itemComponent.RACost,
                         .RBCost = itemComponent.RBCost,
-                        .Shipping = itemComponent.Shipping
+                        .Shipping = itemComponent.Shipping,
+                        .AltDescription = itemComponent.AltDescription
                     })
                 Next
                 itemsComponests = listItemComponents
@@ -195,20 +224,6 @@ Namespace Controllers
             Await db.SaveChangesAsync()
 
             Return CreatedAtRoute("DefaultApi", New With {.id = q.Id}, q)
-        End Function
-
-        ' DELETE: api/Quotations/5
-        <ResponseType(GetType(Quotations))>
-        Async Function DeleteQuotations(ByVal id As Integer) As Task(Of IHttpActionResult)
-            Dim quotations As Quotations = Await db.Quotations.FindAsync(id)
-            If IsNothing(quotations) Then
-                Return NotFound()
-            End If
-
-            db.Quotations.Remove(quotations)
-            Await db.SaveChangesAsync()
-
-            Return Ok(quotations)
         End Function
 
         Protected Overrides Sub Dispose(ByVal disposing As Boolean)

@@ -27,5 +27,6 @@ Partial Public Class ItemsComponents
     Public Property FinalCost As Nullable(Of Double)
     Public Property RACost As Nullable(Of Integer)
     Public Property Shipping As Double
+    Public Property AltDescription As String
 
 End Class

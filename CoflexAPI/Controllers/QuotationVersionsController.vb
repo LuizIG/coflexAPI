@@ -9,37 +9,63 @@ Imports System.Web.Http
 Imports System.Web.Http.Description
 Imports CoflexAPI
 Imports CoflexAPI.QuotationsBindingModel
+Imports Microsoft.AspNet.Identity
 
 Namespace Controllers
+    <Authorize>
     Public Class QuotationVersionsController
         Inherits System.Web.Http.ApiController
 
         Private db As New CoflexDBEntities1
 
         ' GET: api/QuotationVersions
+        ''' <summary>
+        ''' Obtiene el listado de las versiones de cotizacion
+        ''' </summary>
+        ''' <returns></returns>
+        <HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)>
         Function GetQuotationVersions() As IQueryable(Of QuotationVersions)
             Return db.QuotationVersions
         End Function
 
         ' GET: api/QuotationVersions
+        ''' <summary>
+        ''' Obiene el listado de version por cotizacion
+        ''' </summary>
+        ''' <param name="QuotationsId">Id de la cotizacion</param>
+        ''' <returns></returns>
+        <HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)>
         Function GetQuotationVersionsFiltrado(ByVal QuotationsId As Integer) As IQueryable(Of QuotationVersions)
             db.Configuration.LazyLoadingEnabled = False
             Return db.QuotationVersions.Where(Function(x) x.QuotationsId = QuotationsId)
         End Function
 
         ' GET: api/QuotationVersions/5
+        ''' <summary>
+        ''' Obtiene el detalle de la verison por Id
+        ''' </summary>
+        ''' <param name="id">Id de la version de la cotizacion</param>
+        ''' <returns></returns>
+        <HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)>
         <ResponseType(GetType(QuotationVersions))>
         Async Function GetQuotationVersions(ByVal id As Integer) As Task(Of IHttpActionResult)
             Dim quotationVersions As QuotationVersions = Await db.QuotationVersions.FindAsync(id)
             If IsNothing(quotationVersions) Then
                 Return NotFound()
             End If
-
             Return Ok(quotationVersions)
         End Function
 
         ' PATCH: api/QuotationVersions/5
+        ''' <summary>
+        ''' Actualiza es estatus de las versiones y cotizaciones. En base al estatus de la version recibido, se actualiza tambien el estatus de la cotizacion.
+        ''' 0=Abierta,1=Propuesta Cerrada,2=Propuesta Descartada, 3=Propuesta Aceptada (Cambia el estatus de la cotizacion a 1, Abierta), 4=Cancelada (Cambia el estatus de la cotizacion a 2, Cancelada)
+        ''' </summary>
+        ''' <param name="id">Id de la version de la cotizacion</param>
+        ''' <param name="status">Estatus de la version de la cotizacion</param>
+        ''' <returns></returns>
         <HttpPatch>
+        <HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)>
         <ResponseType(GetType(Void))>
         Async Function PatchUpdateStatus(ByVal id As Integer, ByVal status As Integer) As Task(Of IHttpActionResult)
 
@@ -107,6 +133,13 @@ Namespace Controllers
 
 
         ' PUT: api/QuotationVersions/5
+        ''' <summary>
+        ''' Actualiza una version con nuevos datos e items
+        ''' </summary>
+        ''' <param name="id">Id de la version</param>
+        ''' <param name="quotationVersions">Modelo de datos de version e items</param>
+        ''' <returns></returns>
+        <HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)>
         <ResponseType(GetType(Void))>
         Async Function PutQuotationVersions(ByVal id As Integer, ByVal quotationVersions As QuotationVersionIdBindingModel) As Task(Of IHttpActionResult)
             If Not ModelState.IsValid Then
@@ -163,7 +196,8 @@ Namespace Controllers
                         .FinalCost = itemComponent.FinalCost,
                         .RACost = itemComponent.RACost,
                         .RBCost = itemComponent.RBCost,
-                        .Shipping = itemComponent.Shipping
+                        .Shipping = itemComponent.Shipping,
+                        .AltDescription = itemComponent.AltDescription
                     })
                 Next
                 itemsComponests = listItemComponents
@@ -199,6 +233,12 @@ Namespace Controllers
         End Function
 
         ' POST: api/QuotationVersions
+        ''' <summary>
+        ''' Inserta una nueva version sobre una cotizacion existente
+        ''' </summary>
+        ''' <param name="quotationVersionsModel">Modelo de datos de version e items</param>
+        ''' <returns></returns>
+        <HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)>
         <ResponseType(GetType(QuotationVersions))>
         Async Function PostQuotationVersions(ByVal quotationVersionsModel As QuotationVersionIdBindingModel) As Task(Of IHttpActionResult)
             If Not ModelState.IsValid Then
@@ -247,7 +287,8 @@ Namespace Controllers
                         .FinalCost = itemComponent.FinalCost,
                         .RBCost = itemComponent.RBCost,
                         .RACost = itemComponent.RACost,
-                        .Shipping = itemComponent.Shipping
+                        .Shipping = itemComponent.Shipping,
+                        .AltDescription = itemComponent.AltDescription
                     })
                 Next
                 itemsComponests = listItemComponents
@@ -280,20 +321,6 @@ Namespace Controllers
             Await db.SaveChangesAsync()
 
             Return CreatedAtRoute("DefaultApi", New With {.id = qv.Id}, qv)
-        End Function
-
-        ' DELETE: api/QuotationVersions/5
-        <ResponseType(GetType(QuotationVersions))>
-        Async Function DeleteQuotationVersions(ByVal id As Integer) As Task(Of IHttpActionResult)
-            Dim quotationVersions As QuotationVersions = Await db.QuotationVersions.FindAsync(id)
-            If IsNothing(quotationVersions) Then
-                Return NotFound()
-            End If
-
-            db.QuotationVersions.Remove(quotationVersions)
-            Await db.SaveChangesAsync()
-
-            Return Ok(quotationVersions)
         End Function
 
         Protected Overrides Sub Dispose(ByVal disposing As Boolean)

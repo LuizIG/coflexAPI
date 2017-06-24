@@ -33,6 +33,11 @@ Public Class ApplicationDbContext
         Return New ApplicationDbContext
     End Function
 
+    Protected Overrides Sub OnModelCreating(modelBuilder As DbModelBuilder)
+        Database.SetInitializer(Of ApplicationDbContext)(Nothing)
+        MyBase.OnModelCreating(modelBuilder)
+    End Sub
+
     Public Property Quotations As System.Data.Entity.DbSet(Of Quotations)
     Public Property QuotationVersions As System.Data.Entity.DbSet(Of QuotationVersions)
     Public Property Items As System.Data.Entity.DbSet(Of Items)

@@ -8,20 +8,34 @@ Imports System.Threading.Tasks
 Imports System.Web.Http
 Imports System.Web.Http.Description
 Imports CoflexAPI
+Imports Microsoft.AspNet.Identity
 
 Namespace Controllers
+
+    <Authorize>
     Public Class ProspectsController
         Inherits System.Web.Http.ApiController
 
         Private db As New CoflexDBEntities1
 
         ' GET: api/Prospects
+        ''' <summary>
+        ''' Obtiene la lista de prospectos
+        ''' </summary>
+        ''' <returns></returns>
+        <HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)>
         Function GetProspect() As IQueryable(Of Prospect)
             Return db.Prospect
         End Function
 
         ' GET: api/Prospects/5
+        ''' <summary>
+        ''' Obtiene el detalle de un prospecto por Id
+        ''' </summary>
+        ''' <param name="id">Id del prospecto</param>
+        ''' <returns></returns>
         <ResponseType(GetType(Prospect))>
+        <HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)>
         Async Function GetProspect(ByVal id As Integer) As Task(Of IHttpActionResult)
             Dim prospect As Prospect = Await db.Prospect.FindAsync(id)
             If IsNothing(prospect) Then
@@ -32,7 +46,14 @@ Namespace Controllers
         End Function
 
         ' PUT: api/Prospects/5
+        ''' <summary>
+        ''' Actualiza la informacion de un prospecto
+        ''' </summary>
+        ''' <param name="id">Id del prospecto</param>
+        ''' <param name="prospect">Modelo del prospecto</param>
+        ''' <returns></returns>
         <ResponseType(GetType(Void))>
+        <HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)>
         Async Function PutProspect(ByVal id As Integer, ByVal prospect As Prospect) As Task(Of IHttpActionResult)
             If Not ModelState.IsValid Then
                 Return BadRequest(ModelState)
@@ -54,7 +75,13 @@ Namespace Controllers
         End Function
 
         ' POST: api/Prospects
+        ''' <summary>
+        ''' Alta de prospectos
+        ''' </summary>
+        ''' <param name="prospect">Modelo de Prospecto</param>
+        ''' <returns></returns>
         <ResponseType(GetType(Prospect))>
+        <HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)>
         Async Function PostProspect(ByVal prospect As Prospect) As Task(Of IHttpActionResult)
             If Not ModelState.IsValid Then
                 Return BadRequest(ModelState)
@@ -64,20 +91,6 @@ Namespace Controllers
             Await db.SaveChangesAsync()
 
             Return CreatedAtRoute("DefaultApi", New With {.id = prospect.Id}, prospect)
-        End Function
-
-        ' DELETE: api/Prospects/5
-        <ResponseType(GetType(Prospect))>
-        Async Function DeleteProspect(ByVal id As Integer) As Task(Of IHttpActionResult)
-            Dim prospect As Prospect = Await db.Prospect.FindAsync(id)
-            If IsNothing(prospect) Then
-                Return NotFound()
-            End If
-
-            db.Prospect.Remove(prospect)
-            Await db.SaveChangesAsync()
-
-            Return Ok(prospect)
         End Function
 
         Protected Overrides Sub Dispose(ByVal disposing As Boolean)

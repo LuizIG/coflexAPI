@@ -275,8 +275,6 @@
     <Compile Include="Controllers\CommentsController.vb" />
     <Compile Include="Controllers\HomeController.vb" />
     <Compile Include="Controllers\IndicatorController.vb" />
-    <Compile Include="Controllers\ItemsComponentsController.vb" />
-    <Compile Include="Controllers\ItemsController.vb" />
     <Compile Include="Controllers\NewComponentsController.vb" />
     <Compile Include="Controllers\ProspectsController.vb" />
     <Compile Include="Controllers\QuotationsController.vb" />
@@ -343,6 +341,22 @@
       <DependentUpon>201705120254061_Prospect.vb</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201705120254061_Prospect.vb" />
+    <Compile Include="Migrations\201705272003134_descripcionAlterna.Designer.vb">
+      <DependentUpon>201705272003134_descripcionAlterna.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705272003134_descripcionAlterna.vb" />
+    <Compile Include="Migrations\201706152314460_migra1.Designer.vb">
+      <DependentUpon>201706152314460_migra1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706152314460_migra1.vb" />
+    <Compile Include="Migrations\201706152328063_migracionA.Designer.vb">
+      <DependentUpon>201706152328063_migracionA.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706152328063_migracionA.vb" />
+    <Compile Include="Migrations\201706160219380_migra.Designer.vb">
+      <DependentUpon>201706160219380_migra.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706160219380_migra.vb" />
     <Compile Include="Migrations\Configuration.vb" />
     <Compile Include="Model.Context.vb">
       <AutoGen>True</AutoGen>
@@ -442,6 +456,18 @@
     <EmbeddedResource Include="Migrations\201705120254061_Prospect.resx">
       <DependentUpon>201705120254061_Prospect.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705272003134_descripcionAlterna.resx">
+      <DependentUpon>201705272003134_descripcionAlterna.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706152314460_migra1.resx">
+      <DependentUpon>201706152314460_migra1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706152328063_migracionA.resx">
+      <DependentUpon>201706152328063_migracionA.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706160219380_migra.resx">
+      <DependentUpon>201706160219380_migra.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -490,6 +516,7 @@
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
     </None>
+    <None Include="My Project\PublishProfiles\Coflex.pubxml" />
     <None Include="My Project\PublishProfiles\local.pubxml" />
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

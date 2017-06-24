@@ -39,6 +39,7 @@
           <Property Name="FinalCost" Type="float" />
           <Property Name="RACost" Type="int" />
           <Property Name="Shipping" Type="float" Nullable="false" />
+          <Property Name="AltDescription" Type="nvarchar" MaxLength="150" />
         </EntityType>
         <EntityType Name="NewComponents">
           <Key>
@@ -394,6 +395,7 @@ advertencia 6002: La tabla o vista 'CoflexDB2.dbo.QuotationSummaryView' no tiene
           <Property Name="FinalCost" Type="Double" />
           <Property Name="RACost" Type="Int32" />
           <Property Name="Shipping" Type="Double" Nullable="false" />
+          <Property Name="AltDescription" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Quotations">
           <Key>
@@ -713,6 +715,7 @@ advertencia 6002: La tabla o vista 'CoflexDB2.dbo.QuotationSummaryView' no tiene
           <EntitySetMapping Name="ItemsComponents">
             <EntityTypeMapping TypeName="CoflexDBModel.ItemsComponents">
               <MappingFragment StoreEntitySet="ItemsComponents">
+                <ScalarProperty Name="AltDescription" ColumnName="AltDescription" />
                 <ScalarProperty Name="Shipping" ColumnName="Shipping" />
                 <ScalarProperty Name="RACost" ColumnName="RACost" />
                 <ScalarProperty Name="FinalCost" ColumnName="FinalCost" />

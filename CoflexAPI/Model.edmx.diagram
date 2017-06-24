@@ -18,7 +18,7 @@
         <AssociationConnector Association="CoflexDBModel.FK_NewComponents_Quotations" />
         <EntityTypeShape EntityType="CoflexDBModel.NewComponentsView" Width="1.5" PointX="9" PointY="7.375" />
         <EntityTypeShape EntityType="CoflexDBModel.CatUOFMView" Width="1.5" PointX="12.25" PointY="2.625" />
-        <EntityTypeShape EntityType="CoflexDBModel.QuotationSummaryView" Width="1.5" PointX="13" PointY="5.5" />
+        <EntityTypeShape EntityType="CoflexDBModel.QuotationSummaryView" Width="2.25" PointX="13" PointY="5.5" />
         <EntityTypeShape EntityType="CoflexDBModel.Prospect" Width="1.5" PointX="9.375" PointY="2.25" />
         <AssociationConnector Association="CoflexDBModel.FK_Quotations_Prospect" />
         <EntityTypeShape EntityType="CoflexDBModel.QuoteComments" Width="1.5" PointX="4.75" PointY="10.625" />

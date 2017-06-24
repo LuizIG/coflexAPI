@@ -32,11 +32,7 @@ Public Class QuotationsBindingModel
         <Required>
         <Display(Name:="Items")>
         Public Property ItemsBindingModel As ICollection(Of ItemsBindingModel)
-
-
     End Class
-
-
 
     Public Class QuotationVersionIdBindingModel
         Inherits QuotationVersionBindingModel
@@ -132,6 +128,9 @@ Public Class QuotationsBindingModel
 
         <Display(Name:="Shipping")>
         Public Property Shipping As Double
+
+        <Display(Name:="Descripcion Alterna")>
+        Public Property AltDescription As String
 
     End Class
 
